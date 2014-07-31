@@ -2,10 +2,10 @@
 # Author: Crt Ahlin, crt.ahlin@numbersinlife.com
 # Date: 2014
 
-#' @title Function to plot a cyclic cubic spline using truncated power basis
+#' @title Function to calculate coefficients for a cyclic cubic spline using truncated power basis.
 #' @description
-#' A cyclic function is plotted using cubic splines with truncated power basis..
-#' # function for calculating the coeffients ####
+#' The coefficients for a cyclic function constructed using cubic splines with truncated power basis.
+#' 
 #' @export
 cyclicCubicSplineTPB <- function (data, coef=FALSE)
 {
@@ -42,20 +42,33 @@ cyclicCubicSplineTPB <- function (data, coef=FALSE)
   beta2 <- (3/2) * ( - tempsum(solution[-1,], knots, 2) - beta3 )
   beta1 <- - beta2 - beta3 - tempsum(solution[-1,], knots, 3)
   
-  # merge coefficients into final solution
+  # merge coefficients into final solution (inserting beta[1:3] between the rest of them)
   finalSolution <- rbind(solution[1, , drop=FALSE], beta1, beta2, beta3, solution[-1, , drop=FALSE] )
   
   if (coef==FALSE) {
     # return the final solution
     return(finalSolution)
   }
+  # NOTE: R seems to only support matrix size (element count) of up tu 2^31-1 (=2147483647)
+  # See: https://stat.ethz.ch/pipermail/r-help/2007-June/133238.html
+  # So the largest number of observations supported (with 10 coeeficients to estimate) would be
+  # sqrt(2147483647) = 46340.95 or 46340? Although it seems to break at 20.000 already...
+  # Perhaps the bigmemory package would solve the problem? 
+  # See: http://cran.r-project.org/web/packages/bigmemory/bigmemory.pdf
   if (coef==TRUE) {
     return(designMatrix %*% solve(t(designMatrix)%*%designMatrix) %*% t(designMatrix))
   }
   
 }
 
-# function for generating the curve predicted by Cyclic Cubic Spline using Truncated Power Series ####
+#' @title Function to plot a curve for a cyclic cubic spline using truncated power basis.
+#' 
+#' @description
+#' function for generating the curve predicted by Cyclic Cubic Spline using Truncated Power Series 
+#' @param data The data to plot. (Should have at most ~15k observations, due to memory issues on 32bit systems?)
+#' @param curve TRUE or FALSE. Plots either a curve (TRUE) or a set of points (FALSE).
+#' @param add If TRUE, adds the curve to an existing plot. If FALSE, it plots a new plot.
+#' @export
 cyclicCubicSplineTPBCurve <- function (data, curve=FALSE, add=FALSE) {
   # real data points
   xReal <- data$CyclicTime
@@ -116,14 +129,18 @@ cyclicCubicSplineTPBCurve <- function (data, curve=FALSE, add=FALSE) {
     # variance of residuals around the graph; residual / degrees of freedom
     sigmaSquared <- sum((data$CyclicTime - prediction(data$CyclicTime))^2)/
       (dim(data)[1]-10)  # degrees of freedom
+    # pointwise standard error
     se <- sqrt(sigmaSquared * diag(cyclicCubicSplineTPB(data, coef=TRUE)))
+    # width of the error bands (t distribution, 95% confidence)
     bandWidth <- qt(.975,(dim(data)[1]-10))*se
-    points(data$CyclicTime, prediction(data$CyclicTime) + bandWidth, col="blue")
-    points(data$CyclicTime, prediction(data$CyclicTime) - bandWidth, col="blue")
+    # plot the error bands - order the x values first, to make lines visible
+    sortedTime <- sort(data$CyclicTime)
+    points(sortedTime, prediction(sortedTime) + bandWidth, col="blue", type="l")
+    points(sortedTime, prediction(sortedTime) - bandWidth, col="blue", type="l")
     axis(side=4)
   } else {
     yPredicted <- testData %*% cyclicCubicSplineTPB(data)
-    points(yPredicted~x)}
+    points(yPredicted~x, col="blue")}
   
 }
 
