@@ -7,9 +7,10 @@ head(AIRSData)
 library(cyclicCurvesAlfa)
 
 # cyclic cubuc splines
-cyclicCubicSplineTPB(AIRSData[sample(1:1699655, size=15000),], coef = TRUE)
-cyclicCubicSplineTPBCurve(AIRSData[sample(1:1699655, size=200000),])
-cyclicCubicSplineTPBCurve(AIRSData[sample(1:1699655, size=10000),], curve = TRUE)
+cyclicCubicSplineTPB(AIRSData[sample(1:1699655, size=1500),], coef = TRUE)
+cyclicCubicSplineTPB(AIRSData[sample(1:1699655, size=1500),], coef = FALSE)
+cyclicCubicSplineTPBCurve(AIRSData[sample(1:1699655, size=2000),])
+cyclicCubicSplineTPBCurve(AIRSData[sample(1:1699655, size=1000),], curve = TRUE)
 
 # cyclic fractional polynomials
 cyclicFractionalPolynomial(AIRSData)
