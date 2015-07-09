@@ -7,8 +7,15 @@ truncated power basis.}
 \usage{
 cyclicCubicSplineTPB(data, coef = FALSE)
 }
+\arguments{
+\item{data}{The data to work on. It must include a column name CycliTime
+that has domain in [0,1].}
+
+\item{coef}{If TRUE returns the coeficients.
+Otherwise returns the solution matrix.}
+}
 \description{
-The coefficients for a cyclic function constructed using cubic splines
+Returns the coefficients for a cyclic function constructed using cubic splines
 with truncated power basis.
 }
 

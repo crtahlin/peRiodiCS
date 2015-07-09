@@ -7,9 +7,10 @@
 cyclicFractionalPolynomial(data)
 }
 \arguments{
-\item{data}{The data to estimate on.}
+\item{data}{The data to estimate on. Assumes a column named CyclicTime.}
 }
 \description{
-The coefficients for a cyclic function constructed using cyclic fractional polynomial.
+Returns the  coefficients for a cyclic function constructed using cyclic
+fractional polynomial.
 }
 

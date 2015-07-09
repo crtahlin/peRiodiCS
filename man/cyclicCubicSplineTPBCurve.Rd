@@ -7,13 +7,17 @@
 cyclicCubicSplineTPBCurve(data, curve = FALSE, add = FALSE)
 }
 \arguments{
-\item{data}{The data to plot. (Should have at most ~15k observations, due to memory issues on 32bit systems?)}
+\item{data}{The data to plot. (Should have at most ~15k observations,
+due to memory issues on 32bit systems?)}
 
-\item{curve}{TRUE or FALSE. Plots either a curve (TRUE) or a set of points (FALSE).}
+\item{curve}{TRUE or FALSE. Plots either a curve (TRUE) or
+a set of points (FALSE).}
 
-\item{add}{If TRUE, adds the curve to an existing plot. If FALSE, it plots a new plot.}
+\item{add}{If TRUE, adds the curve to an existing plot.
+If FALSE, it plots a new plot.}
 }
 \description{
-function for generating the curve predicted by Cyclic Cubic Spline using Truncated Power Series
+function for generating the curve predicted by Cyclic Cubic Spline using
+Truncated Power Series
 }
 

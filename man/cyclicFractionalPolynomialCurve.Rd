@@ -4,7 +4,7 @@
 \alias{cyclicFractionalPolynomialCurve}
 \title{Function for generating the curve estimated by cyclic fractional polynomial.}
 \usage{
-cyclicFractionalPolynomialCurve(data, curve = FALSE, add = FALSE)
+cyclicFractionalPolynomialCurve(data, curve = TRUE, add = FALSE)
 }
 \arguments{
 \item{data}{Data to estimate on.}
