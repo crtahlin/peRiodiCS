@@ -3,8 +3,11 @@
 #' @param data Data to estimate on.
 #' @param curve If TRUE, a curve is plotted instead of points.
 #' @param add If TRUE, the plot is added to an existing plot.
+#' 
 #' @export
-cyclicFractionalPolynomialCurve <- function (data, curve=FALSE, add=FALSE) {
+cyclicFractionalPolynomialCurve <- function (data,
+                                             curve=TRUE,
+                                             add=FALSE) {
   
   # real data points
   xReal <- data$CyclicTime
