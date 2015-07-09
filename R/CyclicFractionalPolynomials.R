@@ -1,7 +1,10 @@
 #' @title Function to calculate coefficients for a cyclic fractional polynomial.
 #' @description
-#' The coefficients for a cyclic function constructed using cyclic fractional polynomial.
-#' @param data The data to estimate on.
+#' Returns the  coefficients for a cyclic function constructed using cyclic 
+#' fractional polynomial.
+#' 
+#' @param data The data to estimate on. Assumes a column named CyclicTime.
+#' 
 #' @export
 cyclicFractionalPolynomial <- function(data) {
   # Ta verzija deluje. Očitno je Korenski člen nekaj pokvaril lepo obnašanje -
