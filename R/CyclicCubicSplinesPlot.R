@@ -1,12 +1,20 @@
 #' @title Function to plot a curve for a cyclic cubic spline using truncated power basis.
 #' 
 #' @description
-#' function for generating the curve predicted by Cyclic Cubic Spline using Truncated Power Series 
-#' @param data The data to plot. (Should have at most ~15k observations, due to memory issues on 32bit systems?)
-#' @param curve TRUE or FALSE. Plots either a curve (TRUE) or a set of points (FALSE).
-#' @param add If TRUE, adds the curve to an existing plot. If FALSE, it plots a new plot.
+#' function for generating the curve predicted by Cyclic Cubic Spline using 
+#' Truncated Power Series 
+#' 
+#' @param data The data to plot. (Should have at most ~15k observations, 
+#' due to memory issues on 32bit systems?)
+#' @param curve TRUE or FALSE. Plots either a curve (TRUE) or 
+#' a set of points (FALSE).
+#' @param add If TRUE, adds the curve to an existing plot. 
+#' If FALSE, it plots a new plot.
+#' 
 #' @export
-cyclicCubicSplineTPBCurve <- function (data, curve=FALSE, add=FALSE) {
+cyclicCubicSplineTPBCurve <- function (data,
+                                       curve=FALSE,
+                                       add=FALSE) {
   # real data points
   xReal <- data$CyclicTime
   yReal <- data$Value
