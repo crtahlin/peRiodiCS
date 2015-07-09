@@ -1,7 +1,3 @@
-# Cyclic fractional polynomials
-# Author: Crt Ahlin, crt.ahlin@numbersinlife.com
-# Date: 2014
-
 #' @title Function to calculate coefficients for a cyclic fractional polynomial.
 #' @description
 #' The coefficients for a cyclic function constructed using cyclic fractional polynomial.
