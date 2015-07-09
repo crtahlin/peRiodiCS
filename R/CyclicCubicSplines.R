@@ -1,15 +1,18 @@
-# Cyclic cubic spline using truncated power basis
-# Author: Crt Ahlin, crt.ahlin@numbersinlife.com
-# Date: 2014
-
 #' @title Function to calculate coefficients for a cyclic cubic spline using 
 #' truncated power basis.
 #' @description
-#' The coefficients for a cyclic function constructed using cubic splines
+#' Returns the coefficients for a cyclic function constructed using cubic splines
 #' with truncated power basis.
 #' 
+#' @param data The data to work on. It must include a column name CycliTime
+#' that has domain in [0,1].
+#' 
+#' @param coef If TRUE returns the coeficients. 
+#' Otherwise returns the solution matrix.
+#' 
 #' @export
-cyclicCubicSplineTPB <- function (data, coef=FALSE) 
+cyclicCubicSplineTPB <- function (data,
+                                  coef=FALSE) 
   {
   # presume cyclic time data with domain [0,1]
   # presume 9 equaly spaced knots (10 segments)
