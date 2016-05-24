@@ -6,15 +6,15 @@
 #' 
 #' @param data The data to plot. (Should have at most ~15k observations, 
 #' due to memory issues on 32bit systems?)
-#' @param curve TRUE or FALSE. Plots either a curve (TRUE) or 
+#' @param curve OBSOLETE TRUE or FALSE. Plots either a curve (TRUE) or 
 #' a set of points (FALSE).
 #' @param add If TRUE, adds the curve to an existing plot. 
 #' If FALSE, it plots a new plot.
 #' 
 #' @export
 cyclicCubicSplineTPBCurve <- function (data,
-                                       curve=FALSE,
-                                       add=FALSE) {
+                                       add = FALSE,
+                                       se = FALSE) {
   # real data points
   xReal <- data$CyclicTime
   yReal <- data$Value
@@ -23,55 +23,45 @@ cyclicCubicSplineTPBCurve <- function (data,
   # TODO: use the sam knots in cyclicCubicSplineTPB()
   knots <- seq(0.1, 0.9, by=0.1)
   
-  # predicted data points
-  x <- seq(0, 1, by=0.001)
-  testData <- matrix(nrow=1001, ncol=13)
-  # TODO: rewrite this loop using some version of constructXcoordinates() below?
-  for(i in 1:length(x)) {
-    testData[i,1] <- 1
-    testData[i,2] <- x[i]
-    testData[i,3] <- x[i]^2
-    testData[i,4] <- x[i]^3
-    testData[i,5] <- tpower(x=x[i], t=knots[1], 3)
-    testData[i,6] <- tpower(x=x[i], t=knots[2], 3)
-    testData[i,7] <- tpower(x=x[i], t=knots[3], 3)
-    testData[i,8] <- tpower(x=x[i], t=knots[4], 3)
-    testData[i,9] <- tpower(x=x[i], t=knots[5], 3)
-    testData[i,10] <- tpower(x=x[i], t=knots[6], 3)
-    testData[i,11] <- tpower(x=x[i], t=knots[7], 3)
-    testData[i,12] <- tpower(x=x[i], t=knots[8], 3)
-    testData[i,13] <- tpower(x=x[i], t=knots[9], 3)
-  }
-  
-  ##############################################################################
-  # helper function for calculating the predicted x values basis
+##############################################################################
+# helper functions for calculating the predicted x values basis
+
+  # construct matrix of values to predict from
   constructXcoordinates <- function (x) {
-    testData <- matrix(nrow=length(x), ncol=13)
+    dummyData <- matrix(nrow=length(x), ncol=13) # matrix of data 
     for(i in 1:length(x)) {
-      testData[i,1] <- 1
-      testData[i,2] <- x[i]
-      testData[i,3] <- x[i]^2
-      testData[i,4] <- x[i]^3
-      testData[i,5] <- tpower(x=x[i], t=knots[1], 3)
-      testData[i,6] <- tpower(x=x[i], t=knots[2], 3)
-      testData[i,7] <- tpower(x=x[i], t=knots[3], 3)
-      testData[i,8] <- tpower(x=x[i], t=knots[4], 3)
-      testData[i,9] <- tpower(x=x[i], t=knots[5], 3)
-      testData[i,10] <- tpower(x=x[i], t=knots[6], 3)
-      testData[i,11] <- tpower(x=x[i], t=knots[7], 3)
-      testData[i,12] <- tpower(x=x[i], t=knots[8], 3)
-      testData[i,13] <- tpower(x=x[i], t=knots[9], 3)
+      dummyData[i,1] <- 1
+      dummyData[i,2] <- x[i]
+      dummyData[i,3] <- x[i]^2
+      dummyData[i,4] <- x[i]^3
+      dummyData[i,5] <- tpower(x=x[i], t=knots[1], 3)
+      dummyData[i,6] <- tpower(x=x[i], t=knots[2], 3)
+      dummyData[i,7] <- tpower(x=x[i], t=knots[3], 3)
+      dummyData[i,8] <- tpower(x=x[i], t=knots[4], 3)
+      dummyData[i,9] <- tpower(x=x[i], t=knots[5], 3)
+      dummyData[i,10] <- tpower(x=x[i], t=knots[6], 3)
+      dummyData[i,11] <- tpower(x=x[i], t=knots[7], 3)
+      dummyData[i,12] <- tpower(x=x[i], t=knots[8], 3)
+      dummyData[i,13] <- tpower(x=x[i], t=knots[9], 3)
     } 
-    return(testData)
+    return(dummyData)
   }
   
-  prediction <- function (x, parameters=cyclicCubicSplineTPB(data)) {constructXcoordinates(x)%*%parameters}
+  # function to predict values at x based on parameters estimated from real data
+  prediction <- 
+    function (x, parameters=cyclicCubicSplineTPB(data)) {
+    constructXcoordinates(x)%*%parameters
+    }
   
-  
+  # id add is FALSE, a new plot should be generated 
   if (add==FALSE) {plot(data$Value ~ data$CyclicTime, ylim=c(30,200))}
-  if (curve==TRUE) {
-    curve(prediction, from=0, to=1, add=TRUE, lwd=4, col="red")
-    
+  
+  # add a curve predicted for x from 0 to 1
+  curve(prediction, from=0, to=1, add=TRUE, lwd=2, col="red")
+   
+  # add std. error bands if se = TRUE
+  if (se == TRUE) {
+    # TODO : check logic bellow
     # variance of residuals around the graph; residual / degrees of freedom
     sigmaSquared <- sum((data$CyclicTime - prediction(data$CyclicTime))^2)/
       (dim(data)[1]-10)  # degrees of freedom
@@ -84,7 +74,6 @@ cyclicCubicSplineTPBCurve <- function (data,
     points(sortedTime, prediction(sortedTime) + bandWidth, col="blue", type="l")
     points(sortedTime, prediction(sortedTime) - bandWidth, col="blue", type="l")
     axis(side=4)
-  } else {
-    yPredicted <- testData %*% cyclicCubicSplineTPB(data)
-    points(yPredicted~x, col="blue")}
+  }
+    
 }

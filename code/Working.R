@@ -14,7 +14,7 @@ str(CCS2) # regression coeficients
 # curve
 cyclicCubicSplineTPBCurve(AIRSData[sample(1:1699655, size=2000),])
 # curve with confidence intervals
-cyclicCubicSplineTPBCurve(AIRSData[sample(1:1699655, size=1000),], curve = TRUE)
+cyclicCubicSplineTPBCurve(AIRSData[sample(1:1699655, size=1000),], se = TRUE)
 
 # cyclic fractional polynomials
 cyclicFractionalPolynomial(AIRSData) # regression coeficients
