@@ -7,5 +7,6 @@ Author: Crt Ahlin
 Maintainer: Crt Ahlin <crt.ahlin@gmail.com>
 Description: Work on Sklop2 of PhD thesis. 
 License: All rights reserved.
-Depends:
-  ggplot2
+Depends: 
+  ggplot2, rms
+Suggests: testthat
