@@ -1,0 +1,62 @@
+#version where it is possible to get the basis also when the number of knots is equal to 5
+
+#' @export
+rcs.per=function(x, knots=NULL, nk=5, xmin=min(x, na.rm=TRUE), xmax=max(x, na.rm=TRUE)){
+  #x: numerical variable
+  #knots: vector with the knots of the spline
+  #nk: number of knots, used only if the knots are not specified, overridden otherwise
+  #xmin: value of the (theoretical) minimum of x
+  #xmax: value of the (theoretical) maximum of x
+  
+  #derive the knots as in the rms package, if not provided
+  if(is.null(knots)) {
+    knots=rcspline.eval(x, nk=nk, knots.only=TRUE)
+  }
+  
+  
+  nk=length(knots)
+  if(nk<4) stop("To use the periodic RCS you must specify at least 4 knots")
+  
+  b.x.all=b.rcs(x, knots) #matrix with the expansion of the splines, n*(k-2)
+  b.xmax.all=b.rcs(xmax, knots) #value of the spline for x=xmax, vector 1*(k-2)
+  
+  b.prime.x.all=b.rcs.prime(x, knots) #matrix with the first derivative of the expansion of the splines, n*(k-2)
+  b.prime.xmax.all=b.rcs.prime(xmax, knots) #vector with the value of the first derivative for x=xmax, vector 1*(k-2)
+  
+  
+  #terms to add in gamma1
+  gamma1.c1=(xmin-xmax)/b.xmax.all[nk-2] #constant
+  gamma.f1=gamma1.c1*b.x.all[,nk-2] #vector n*1
+  
+  gamma.f2=gamma1.c1*b.prime.xmax.all[nk-2]
+  
+  
+  denom.beta.kMinus3=b.prime.xmax.all[nk-3]-b.xmax.all[nk-3]/b.xmax.all[nk-2]*b.prime.xmax.all[nk-2]
+  
+  
+  #betaj.f1=b.x.all[,c(1:(nk-3))]-b.xmax.all[,c(1:(nk-3))]/b.xmax.all[nk-2]*b.x.all[,nk-2]
+  
+  beta.j=matrix(NA, ncol=nk-3, nrow=length(x))
+  
+  for(j in 1:(nk-3)) {beta.j[,j]= b.x.all[,j]- b.xmax.all[j]/b.xmax.all[nk-2]*b.x.all[,nk-2]}
+  
+  if(nk>4){
+    beta.c2.j=matrix(NA, ncol=nk-4, nrow=length(x))
+    for(j in 1:(nk-4)) {beta.c2.j[,j]=b.prime.xmax.all[,j]-b.xmax.all[j]/b.xmax.all[nk-2]*b.prime.xmax.all[nk-2]}
+  }
+  
+  
+  num.beta.kMinus3=beta.j[,nk-3]
+  
+  
+  if(nk>4)  
+    tmp= cbind(x+gamma.f1-gamma.f2/denom.beta.kMinus3*num.beta.kMinus3,
+               beta.j[,1:(nk-4)]-beta.c2.j[,1:(nk-4)]*num.beta.kMinus3/denom.beta.kMinus3
+    )   else tmp=x+gamma.f1-gamma.f2/denom.beta.kMinus3*num.beta.kMinus3
+  
+  #saves the knots
+  attr(tmp, "knots") <- knots
+  
+  tmp
+  
+}#end rcs.per
