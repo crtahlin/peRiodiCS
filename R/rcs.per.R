@@ -15,7 +15,7 @@ rcs.per=function(x,
  
   # derive the knot locations as in the rms package, if they are not provided
   if(is.null(knots)) {
-    knots=rcspline.eval(x, nk=nk, knots.only=TRUE)
+    knots = rcspline.eval(x, nk = nk, knots.only = TRUE)
   }
   
   # check if the number of knots if at least 4
