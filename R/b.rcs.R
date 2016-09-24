@@ -1,16 +1,20 @@
-#function that derives the restricted cubic splines 
-#for a value/vector of values, given the knots, 
-#obtains exactly the same results as the rcs function included in the rms package
-
+#' @title TODO: REVIEW Basis for restricted cubic splines
+#' 
+#' @details 
+#' function that derives the restricted cubic splines 
+#' for a value/vector of values, given the knots, 
+#' obtains exactly the same results as the rcs function included in the rms package
+#' 
+#' @param x numerical vector
+#' @param knots vector specifying the knots
+#' @param inclx logical, if TRUE returns also the x vector
+#' 
 #' @export
-b.rcs=function(x, knots, inclx=FALSE){
-  #x: numerical vector
-  #knots: vector specifying the knots
-  #inclx: logical, if TRUE returns also the x vector
-  num.knots=length(knots)
-  tk=knots[num.knots]
-  tkmin1=knots[num.knots-1]
-  
+b.rcs=function(x, knots, inclx=FALSE) {
+
+  num.knots = length(knots)
+  tk = knots[num.knots]
+  tkmin1 = knots[num.knots-1]
   
   my.res=lapply(1:(num.knots-2), 
                 function(i){
@@ -22,12 +26,10 @@ b.rcs=function(x, knots, inclx=FALSE){
   
   my.res=matrix(unlist(my.res), ncol=num.knots-2)
   
-  if(inclx) my.res=cbind(x, my.res)
-  
-  
-  
-  my.res
-  
+  if (inclx) my.res=cbind(x, my.res)
+
+  # return result
+  return(my.res)
   
 }#end b.rcs
 
