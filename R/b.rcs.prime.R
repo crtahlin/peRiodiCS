@@ -1,12 +1,17 @@
-#function that derives the first derivative of the restricted cubic splines 
-#for a value/vector of values, given the knots
-
+#' @title TODO REVIEW Derive first derivatives of RCS
+#' 
+#' @description 
+#' function that derives the first derivative of the restricted cubic splines 
+#' for a value/vector of values, given the knots
+#' 
+#' @param x vector of values
+#' @param knots vector of knot locations
+#' 
 #' @export
-b.rcs.prime=function(x, knots){
-  num.knots=length(knots)
-  tk=knots[num.knots]
-  tkmin1=knots[num.knots-1]
-  
+b.rcs.prime = function(x, knots) {
+  num.knots = length(knots)
+  tk = knots[num.knots]
+  tkmin1 = knots[num.knots-1]
   
   my.res=lapply(1:(num.knots-2), 
                 function(i){
@@ -17,6 +22,9 @@ b.rcs.prime=function(x, knots){
                 })
   
   my.res=matrix(unlist(my.res), ncol=num.knots-2)
+  
+  # return result
+  return(my.res)
   
 }#end b.rcs.prime
 
