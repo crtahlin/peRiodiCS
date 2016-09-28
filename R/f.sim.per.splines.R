@@ -27,6 +27,18 @@ f.sim.per.splines=function(B=100,
   #4*2: AUC, 2*3: calibration, 3: LRT for training models, 3: score test for training models
   my.res = matrix(NA, nrow=B, ncol=num.res)
   
+  # add names to columns
+  colnames(my.res) <- 
+    c("brier.rcs.train", "brier.rcs.per.train", "brier.cs.per.train",
+      "brier.rcs", "brier.rcs.per", "brier.cs.per",
+      "AUCTrainEst.rcs", "AUCTrainEst.rcs.per", "AUCTrainEst.cs.per",
+      "AUCNewEst.rcs", "AUCNewEst.rcs.per", "AUCNewEst.cs.per",
+      "cal.rcs.1", "cal.rcs.per.1", "cal.cs.per.1",
+      "cal.rcs.2", "cal.rcs.per.2", "cal.cs.per.2",
+      "lrt.p.value.rcs.train", "lrt.p.value.rcs.per.train", "lrt.p.value.cs.per.train",
+      "score.p.value.rcs.train", "score.p.value.rcs.per.train", "score.p.value.cs.per.train",
+      "AUCTrainMax", "AUCNewMax", "prop.events.train", "prop.events.test")
+  
   #matrix that will contain the coverage information evaluated for these points
   #x.test.points=seq(0.025, 0.975, by=.025)
   
@@ -390,6 +402,12 @@ f.sim.per.splines=function(B=100,
     
     
   }#end for b
+  
+  # TODOs
+  # -pojdi skozi izvajanje, preglej rezultate
+  # -dodaj možnost generiranja podatkov z zamaknjeno sin funkcijo
+  # -dodaj možnost izvajanja z non-sin funkcijo?
+  # -dodaj možnost izvajanja 
   
   return(list(my.res=my.res,  
               prob.coverage.rcs=prob.coverage.rcs, prob.coverage.rcs.per=prob.coverage.rcs.per, prob.coverage.cs.per=prob.coverage.cs.per,
