@@ -9,6 +9,8 @@
 #' @param par1sin first parameter of sinusoidal function
 #' @param par2sin second parameter of sin function
 #' @param par3sin third parameter of sin function
+#' @param par4sin the number of sine cycles per one of our periods
+#' @param par5sin offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve?
 #' 
 #' @export
 f.sim.per.splines=function(B=100,
@@ -20,7 +22,15 @@ f.sim.per.splines=function(B=100,
                            #parameters for the generation of the periodic data
                            par1sin=1,
                            par2sin=0.25,
-                           par3sin=0.25){
+                           par3sin=0.25,
+                           par4sin=1,
+                           par5sin=0){
+  
+  # define the probability function
+  sine_function <- function(par1sin, par2sin, par3sin) {
+    result <- (par1sin + sin(x * 2 * pi * par4sin + (par5sin * 2 * pi) )) * par2sin + par3sin 
+    return(result)
+  }
   
   ############### initialization of the outputs ####
   num.res = 3 + 3 + 2 + 4*2 + 2*3 + 3 + 3
@@ -69,7 +79,7 @@ f.sim.per.splines=function(B=100,
     x = runif(n) # we generate 100 x values
     
     # simulation of the probabilities
-    x.transf.2 = x.transf = (par1sin + sin(x * 2 * pi)) * par2sin + par3sin
+    x.transf.2 = x.transf = sine_function(par1sin, par2sin, par3sin) #(par1sin + sin(x * 2 * pi)) * par2sin + par3sin
     #simulation of the binary events
     y = ifelse(runif(n) < x.transf.2, 1, 0) # event happens if generated random number [0,1] smaller than simulated probability
     # TODO: why not use rbinom() ?
@@ -237,7 +247,7 @@ f.sim.per.splines=function(B=100,
     #x.transf.2.lp=lpnew.true=log(x.transf.2/(1-x.transf.2))
     
     #x.transf.2=x.transf=(1+sin(x*2*pi))*.25+.25
-    x.transf.2=x.transf=(par1sin+sin(x*2*pi))*par2sin+par3sin
+    x.transf.2=x.transf=sine_function(par1sin, par2sin, par3sin)
     ynew=ifelse(runif(n)<x.transf, 1, 0)
     x.transf.2.lp=log(x.transf.2/(1-x.transf.2))
     
@@ -420,7 +430,7 @@ f.sim.per.splines=function(B=100,
               B=B, n=n, n.new=n.new, nk=nk, knots=my.knots, knots.cs=my.knots.cs, 
               quantiles.cs=quantiles.cs,
               #parameters for the generation of the periodic data
-              par1sin=par1sin, par2sin=par2sin, par3sin=par3sin, prop.events.train=prop.events.train, prop.events.test=prop.events.test
+              par1sin=par1sin, par2sin=par2sin, par3sin=par3sin, par4sin=par4sin, par5sin=par5sin, prop.events.train=prop.events.train, prop.events.test=prop.events.test
               ,
               x=x, x.transf.2.lp=x.transf.2.lp
   ))
