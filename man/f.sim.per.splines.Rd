@@ -27,7 +27,7 @@ f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
 
 \item{par4sin}{the number of sine cycles per one of our periods}
 
-\item{par5sin}{offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.5 we would get cosine curve?}
+\item{par5sin}{offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve?}
 
 \item{quatiles.cs}{quantiles at which to place the knots by default?}
 }
