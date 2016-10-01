@@ -79,7 +79,7 @@ f.sim.per.splines=function(B=100,
     x = runif(n) # we generate 100 x values
     
     # simulation of the probabilities
-    x.transf.2 = x.transf = sine_function(par1sin, par2sin, par3sin, par4sin, par5sin) #(par1sin + sin(x * 2 * pi)) * par2sin + par3sin
+    x.transf.2 = x.transf = sine_function(x, par1sin, par2sin, par3sin, par4sin, par5sin) #(par1sin + sin(x * 2 * pi)) * par2sin + par3sin
     #simulation of the binary events
     y = ifelse(runif(n) < x.transf.2, 1, 0) # event happens if generated random number [0,1] smaller than simulated probability
     # TODO: why not use rbinom() ?
@@ -247,7 +247,7 @@ f.sim.per.splines=function(B=100,
     #x.transf.2.lp=lpnew.true=log(x.transf.2/(1-x.transf.2))
     
     #x.transf.2=x.transf=(1+sin(x*2*pi))*.25+.25
-    x.transf.2=x.transf=sine_function(par1sin, par2sin, par3sin, par4sin, par5sin)
+    x.transf.2=x.transf=sine_function(x, par1sin, par2sin, par3sin, par4sin, par5sin)
     ynew=ifelse(runif(n)<x.transf, 1, 0)
     x.transf.2.lp=log(x.transf.2/(1-x.transf.2))
     
