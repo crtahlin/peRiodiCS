@@ -1,5 +1,11 @@
-cyclic_alfa
+peRiodic
 ===========
 
-Code for the cyclic functions under development for S2 of the dissertation.
-Author: Crt Ahlin, all rights reserved. 
+Code for the cyclic functions under development.
+
+Install with :
+
+```
+library(devtools)
+install_github("crtahlin/peRiodic")
+```
