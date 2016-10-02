@@ -1,14 +1,17 @@
 Package: peRiodic
 Type: Package
 Title: Functions for generating periodic curves.
-Version: 0.2
-Date: 2016-09-29
+Version: 0.3
+Date: 2016-010-02
 Author: Crt Ahlin, Lara Lusa
 Maintainer: Crt Ahlin <crt.ahlin@gmail.com>
 Description: Functions for generating some variants of cyclic curves
-  (restricted cubic spline, periodic restricted cubic splines,
-  periodic cubic splines).
+    (restricted cubic spline, periodic restricted cubic splines,
+    periodic cubic splines).
 License: GPL-3
-Depends: 
-  ggplot2, rms
-Suggests: testthat
+Depends:
+    ggplot2,
+    rms
+Suggests:
+    testthat
+RoxygenNote: 5.0.1
