@@ -6,7 +6,7 @@
 #' @export
 look_at_simulation <- function(par4sin, par5sin, results_list, file = NULL) {
   
-  hash <- digest(paste0(par4sin, par5sin)) # calculate hash value to find the result
+  hash <- digest(paste0(par4sin,",", par5sin)) # calculate hash value to find the result
   results <- results_list[[hash]] # extract results from a list
   
   # calculate average from data saved in my.res
