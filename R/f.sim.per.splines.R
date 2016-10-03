@@ -76,14 +76,17 @@ f.sim.per.splines=function(B=100,
   ############### beginning of the iterations
   for(b in 1:B) {
     
+    # TODO 1: test if we get the same results with runif(n, min = 0, max = 2) - aka two cycles
     x = runif(n) # we generate 100 x values
     
     # simulation of the probabilities
     x.transf.2 = x.transf = sine_function(x, par1sin, par2sin, par3sin, par4sin, par5sin) #(par1sin + sin(x * 2 * pi)) * par2sin + par3sin
     #simulation of the binary events
+    # TODO 2: we don't have to change this runif, since it generates the y axis?
     y = ifelse(runif(n) < x.transf.2, 1, 0) # event happens if generated random number [0,1] smaller than simulated probability
     # TODO: why not use rbinom() ?
     
+    # TODO 3: but from now on, we have to transform the X to squish it inside [0,1]? modulus division, e.g. (x %% 1)
     #transformation on the linear predictor scale
     x.transf.2.lp = log(x.transf.2 / (1 - x.transf.2))
     
@@ -230,7 +233,7 @@ f.sim.per.splines=function(B=100,
     x.old=x
     
     ############## new data #######################
-    
+    # TODO 5: redo the code from training to enable trends
     
     #n.new=1000
     x=runif(n.new)
