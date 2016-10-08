@@ -6,7 +6,7 @@
 \usage{
 f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
   quantiles.cs = c(0.05, 0.25, 0.5, 0.75, 0.95), par1sin = 1,
-  par2sin = 0.25, par3sin = 0.25, par4sin = 1, par5sin = 0)
+  par2sin = 0.25, par3sin = 0.25, par4sin = 1, par5sin = 0, tmax = 1)
 }
 \arguments{
 \item{B}{number of simulations}
@@ -28,6 +28,8 @@ f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
 \item{par4sin}{the number of sine cycles per one of our periods (defaults to 1 cycle)}
 
 \item{par5sin}{offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve}
+
+\item{tmax}{the end of the interval we are using, e.g. 3 for "3 years"; useful if studying trends (defaults to 1)}
 
 \item{quatiles.cs}{quantiles at which to place the knots by default?}
 }

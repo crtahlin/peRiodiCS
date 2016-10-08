@@ -11,6 +11,7 @@
 #' @param par3sin constant to add to additionaly "shift" the whole function to wanted level (defaults to 0.25, to raise the whole function above 0)
 #' @param par4sin the number of sine cycles per one of our periods (defaults to 1 cycle)
 #' @param par5sin offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve
+#' @param tmax the end of the interval we are using, e.g. 3 for "3 years"; useful if studying trends (defaults to 1)
 #' 
 #' @export
 f.sim.per.splines=function(B=100,
@@ -24,7 +25,8 @@ f.sim.per.splines=function(B=100,
                            par2sin=0.25,
                            par3sin=0.25,
                            par4sin=1,
-                           par5sin=0){
+                           par5sin=0,
+                           tmax = 1){
   
   # define the probability function
   # sine_function <- function(par1sin, par2sin, par3sin, par4sin, par5sin) {
@@ -435,7 +437,8 @@ f.sim.per.splines=function(B=100,
               #parameters for the generation of the periodic data
               par1sin=par1sin, par2sin=par2sin, par3sin=par3sin, par4sin=par4sin, par5sin=par5sin, prop.events.train=prop.events.train, prop.events.test=prop.events.test
               ,
-              x=x, x.transf.2.lp=x.transf.2.lp
+              x=x, x.transf.2.lp=x.transf.2.lp,
+              tmax = tmax
   ))
   
   
