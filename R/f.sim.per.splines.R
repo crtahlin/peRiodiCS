@@ -89,7 +89,7 @@ f.sim.per.splines=function(B=100,
   for(b in 1:B) {
     
     # TODO 1: test if we get the same results with runif(n, min = 0, max = 2) - aka two cycles
-    x = runif(n) # we generate 100 x values
+    x = runif(n, min = 0, max = tmax) # we generate 100 x values
     
     # simulation of the probabilities
     x.transf.2 = x.transf = probability_function(x) #sine_function(x, par1sin, par2sin, par3sin, par4sin, par5sin) #(par1sin + sin(x * 2 * pi)) * par2sin + par3sin
@@ -248,7 +248,7 @@ f.sim.per.splines=function(B=100,
     # TODO 5: redo the code from training to enable trends
     
     #n.new=1000
-    x=runif(n.new)
+    x=runif(n.new, min = 0, max = tmax)
     #x=x.old
     ######temporary trick to include the extreme values in the sample
     #x[which.min(x)]=0
