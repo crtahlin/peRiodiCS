@@ -77,12 +77,12 @@ f.sim.per.splines=function(B=100,
   
   # define probability function in one place
   probability_function <- function(x,
-                                   par1sin = par1sin,
-                                   par2sin = par2sin,
-                                   par3sin = par3sin,
-                                   par4sin = par4sin,
-                                   par5sin = par5sin) {
-    sine_function(x, par1sin, par2sin, par3sin, par4sin, par5sin)
+                                   par1sin. = par1sin,
+                                   par2sin. = par2sin,
+                                   par3sin. = par3sin,
+                                   par4sin. = par4sin,
+                                   par5sin. = par5sin) {
+    sine_function(x, par1sin=par1sin., par2sin=par2sin., par3sin=par3sin., par4sin=par4sin., par5sin=par5sin.)
     }
   
   ############### beginning of the iterations
