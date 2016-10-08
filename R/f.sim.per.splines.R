@@ -6,11 +6,11 @@
 #' @param nk number of knots
 #' @param knots vector with locations of knots
 #' @param quatiles.cs quantiles at which to place the knots by default?
-#' @param par1sin first parameter of sinusoidal function
-#' @param par2sin second parameter of sin function
-#' @param par3sin third parameter of sin function
-#' @param par4sin the number of sine cycles per one of our periods
-#' @param par5sin offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve?
+#' @param par1sin constant to add to "shift" the sine function to generate values in acceptable range (defaults to 1, to have function values between 0 and 2)
+#' @param par2sin factor to multiply the sine function by (<1, "squashing" the function min-max difference; defaults to 0.25, to have mix&max of the output differ by 0.5 from original 2)
+#' @param par3sin constant to add to additionaly "shift" the whole function to wanted level (defaults to 0.25, to raise the whole function above 0)
+#' @param par4sin the number of sine cycles per one of our periods (defaults to 1 cycle)
+#' @param par5sin offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve
 #' 
 #' @export
 f.sim.per.splines=function(B=100,

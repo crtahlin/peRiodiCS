@@ -19,15 +19,15 @@ f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
 
 \item{knots}{vector with locations of knots}
 
-\item{par1sin}{first parameter of sinusoidal function}
+\item{par1sin}{constant to add to "shift" the sine function to generate values in acceptable range (defaults to 1, to have function values between 0 and 2)}
 
-\item{par2sin}{second parameter of sin function}
+\item{par2sin}{factor to multiply the sine function by (<1, "squashing" the function min-max difference; defaults to 0.25, to have mix&max of the output differ by 0.5 from original 2)}
 
-\item{par3sin}{third parameter of sin function}
+\item{par3sin}{constant to add to additionaly "shift" the whole function to wanted level (defaults to 0.25, to raise the whole function above 0)}
 
-\item{par4sin}{the number of sine cycles per one of our periods}
+\item{par4sin}{the number of sine cycles per one of our periods (defaults to 1 cycle)}
 
-\item{par5sin}{offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve?}
+\item{par5sin}{offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve}
 
 \item{quatiles.cs}{quantiles at which to place the knots by default?}
 }
