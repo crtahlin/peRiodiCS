@@ -7,6 +7,6 @@
 sine_function(x, par1sin = 1, par2sin = 0.25, par3sin = 0.25,
   par4sin = 1, par5sin = 0, par1trend = 1, par2trend = 0.1,
   par3trend = 0, par4trend = 1/10, par5trend = 0, add_trend = TRUE,
-  maxvalue = 0.95, minvalue = 0.05)
+  max_prob_value = 0.95, min_prob_value = 0.05)
 }
 
