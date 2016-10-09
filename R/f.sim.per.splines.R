@@ -12,6 +12,14 @@
 #' @param par4sin the number of sine cycles per one of our periods (defaults to 1 cycle)
 #' @param par5sin offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve
 #' @param tmax the end of the interval we are using, e.g. 3 for "3 years"; useful if studying trends (defaults to 1)
+#' @param add_trend boolean. whether to simulate a trend in probability changeing over years. Trend also uses a sine function. defaults to FALSE.
+#' @param par1trend constant to add to "shift" the trend part. (defaults to 1, to have function values between 0 and 2)
+#' @param par2trend factor to multiply the trend sine function (<1, squashin it; defaults to 0.1, to have min&max differ by 0.2)
+#' @param par3trend constant to add to additionaly shift the whole trend to wanted level (defaults to 0, for no additional shifting, e.g. start at 0)
+#' @param par4trend the number of trend sine cycles per one of our periods (cycles) (defaults to 1/10, for repeating after 10 cycles)
+#' @param par5trend offset of the trend sine curve in multiples of 2*Pi (defaults to 0, for a sine curve)
+#' @param max_prob_value the maximum generated allowed probability value (defaults to 0.95)
+#' @param min_prob_value the minimum allowed generated probability value (defaults to 0.05)
 #' 
 #' @export
 f.sim.per.splines=function(B=100,
@@ -26,7 +34,15 @@ f.sim.per.splines=function(B=100,
                            par3sin=0.25,
                            par4sin=1,
                            par5sin=0,
-                           tmax = 1){
+                           tmax = 1,
+                           add_trend = FALSE,
+                           par1trend = 1,
+                           par2trend = 0.1,
+                           par3trend = 0,
+                           par4trend = 1/10,
+                           par5trend = 0,
+                           max_prob_value = 0.95,
+                           min_prob_value = 0.05){
   
   # define the probability function
   # sine_function <- function(par1sin, par2sin, par3sin, par4sin, par5sin) {
@@ -81,8 +97,30 @@ f.sim.per.splines=function(B=100,
                                    par2sin. = par2sin,
                                    par3sin. = par3sin,
                                    par4sin. = par4sin,
-                                   par5sin. = par5sin) {
-    sine_function(x, par1sin=par1sin., par2sin=par2sin., par3sin=par3sin., par4sin=par4sin., par5sin=par5sin.)
+                                   par5sin. = par5sin,
+                                   add_trend. = add_trend,
+                                   par1trend. = par1trend,
+                                   par2trend. = par2trend,
+                                   par3trend. = par3trend,
+                                   par4trend. = par4trend,
+                                   par5trend. = par5trend,
+                                   max_prob_value. = max_prob_value,
+                                   min_prob_value. = min_prob_value) {
+    sine_function(x,
+                  par1sin=par1sin.,
+                  par2sin=par2sin.,
+                  par3sin=par3sin.,
+                  par4sin=par4sin.,
+                  par5sin=par5sin.,
+                  add_trend = add_trend.,
+                  par1trend = par1trend.,
+                  par2trend = par2trend.,
+                  par3trend = par3trend.,
+                  par4trend = par4trend.,
+                  par5trend = par5trend.,
+                  max_prob_value = max_prob_value.,
+                  min_prob_value = min_prob_value.
+                  )
     }
   
   ############### beginning of the iterations
@@ -455,7 +493,16 @@ f.sim.per.splines=function(B=100,
               par1sin=par1sin, par2sin=par2sin, par3sin=par3sin, par4sin=par4sin, par5sin=par5sin, prop.events.train=prop.events.train, prop.events.test=prop.events.test
               ,
               x=x, x.transf.2.lp=x.transf.2.lp,
-              tmax = tmax
+              tmax = tmax,
+              # trend parameters
+              add_trend = add_trend,
+              par1trend = par1trend,
+              par2trend = par2trend,
+              par3trend = par3trend,
+              par4trend = par4trend,
+              par5trend = par5trend,
+              max_prob_value = max_prob_value,
+              min_prob_value = min_prob_value
   ))
   
   

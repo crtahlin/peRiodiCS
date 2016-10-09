@@ -6,7 +6,10 @@
 \usage{
 f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
   quantiles.cs = c(0.05, 0.25, 0.5, 0.75, 0.95), par1sin = 1,
-  par2sin = 0.25, par3sin = 0.25, par4sin = 1, par5sin = 0, tmax = 1)
+  par2sin = 0.25, par3sin = 0.25, par4sin = 1, par5sin = 0, tmax = 1,
+  add_trend = FALSE, par1trend = 1, par2trend = 0.1, par3trend = 0,
+  par4trend = 1/10, par5trend = 0, max_prob_value = 0.95,
+  min_prob_value = 0.05)
 }
 \arguments{
 \item{B}{number of simulations}
@@ -30,6 +33,22 @@ f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
 \item{par5sin}{offset of the sine curve in multiples of 2*Pi (defaults to 0); with 0.25 we would get cosine curve}
 
 \item{tmax}{the end of the interval we are using, e.g. 3 for "3 years"; useful if studying trends (defaults to 1)}
+
+\item{add_trend}{boolean. whether to simulate a trend in probability changeing over years. Trend also uses a sine function. defaults to FALSE.}
+
+\item{par1trend}{constant to add to "shift" the trend part. (defaults to 1, to have function values between 0 and 2)}
+
+\item{par2trend}{factor to multiply the trend sine function (<1, squashin it; defaults to 0.1, to have min&max differ by 0.2)}
+
+\item{par3trend}{constant to add to additionaly shift the whole trend to wanted level (defaults to 0, for no additional shifting, e.g. start at 0)}
+
+\item{par4trend}{the number of trend sine cycles per one of our periods (cycles) (defaults to 1/10, for repeating after 10 cycles)}
+
+\item{par5trend}{offset of the trend sine curve in multiples of 2*Pi (defaults to 0, for a sine curve)}
+
+\item{max_prob_value}{the maximum generated allowed probability value (defaults to 0.95)}
+
+\item{min_prob_value}{the minimum allowed generated probability value (defaults to 0.05)}
 
 \item{quatiles.cs}{quantiles at which to place the knots by default?}
 }
