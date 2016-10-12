@@ -20,6 +20,7 @@
 #' @param par5trend offset of the trend sine curve in multiples of 2*Pi (defaults to 0, for a sine curve)
 #' @param max_prob_value the maximum generated allowed probability value (defaults to 0.95)
 #' @param min_prob_value the minimum allowed generated probability value (defaults to 0.05)
+#' @param set_seed sets the seed - the same for each simulation "batch" (defaults to 1234)
 #' 
 #' @export
 f.sim.per.splines=function(B=100,
@@ -42,13 +43,11 @@ f.sim.per.splines=function(B=100,
                            par4trend = 1/10,
                            par5trend = 0,
                            max_prob_value = 0.95,
-                           min_prob_value = 0.05){
+                           min_prob_value = 0.05,
+                           set_seed = 1234){
   
-  # define the probability function
-  # sine_function <- function(par1sin, par2sin, par3sin, par4sin, par5sin) {
-  #   result <- (par1sin + sin(x * 2 * pi * par4sin + (par5sin * 2 * pi) )) * par2sin + par3sin 
-  #   return(result)
-  # }
+  # set the seed ####
+  set.seed(set_seed)
   
   ############### initialization of the outputs ####
   num.res = 3 + 3 + 2 + 4*2 + 2*3 + 3 + 3
@@ -502,7 +501,9 @@ f.sim.per.splines=function(B=100,
               par4trend = par4trend,
               par5trend = par5trend,
               max_prob_value = max_prob_value,
-              min_prob_value = min_prob_value
+              min_prob_value = min_prob_value,
+              # seed
+              set_seed = set_seed
   ))
   
   

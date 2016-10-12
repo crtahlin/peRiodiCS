@@ -9,7 +9,7 @@ f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
   par2sin = 0.25, par3sin = 0.25, par4sin = 1, par5sin = 0, tmax = 1,
   add_trend = FALSE, par1trend = 1, par2trend = 0.1, par3trend = 0,
   par4trend = 1/10, par5trend = 0, max_prob_value = 0.95,
-  min_prob_value = 0.05)
+  min_prob_value = 0.05, set_seed = 1234)
 }
 \arguments{
 \item{B}{number of simulations}
@@ -49,6 +49,8 @@ f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
 \item{max_prob_value}{the maximum generated allowed probability value (defaults to 0.95)}
 
 \item{min_prob_value}{the minimum allowed generated probability value (defaults to 0.05)}
+
+\item{set_seed}{sets the seed - the same for each simulation "batch" (defaults to 1234)}
 
 \item{quatiles.cs}{quantiles at which to place the knots by default?}
 }
