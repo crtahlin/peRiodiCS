@@ -153,7 +153,7 @@ f.sim.per.splines=function(B=100,
     my.knots = attr(x.rcs, "knots")
     
     # TODO!: check that my.knot are correct for each of the functions! and that each returns the same knot locations
-    # TODO!: set the default quantiles.cs to NULL?
+    # TODO!: set the default quantiles.cs to NULL? otherwise they will have knots at different locations
     
     # periodic cubic splines
     if(is.null(quantiles.cs)){ 
@@ -163,6 +163,11 @@ f.sim.per.splines=function(B=100,
       my.knots.cs = as.numeric(quantile(ecdf(x), quantiles.cs))
       x.cs.per = cs.per(x, knots=my.knots.cs, nk=NULL, xmin=min.th.x, xmax=max.th.x)
     }
+    
+    # save each of the knots
+    my.knots.rcs = attr(x.rcs, "knots")
+    my.knots.rcs.per = attr(x.rcs.per, "knots")
+    my.knots.cs.per = attr(x.cs.per, "knots")
     
     #changed in this simulation! knot location for cs, uniformly distributed
     
