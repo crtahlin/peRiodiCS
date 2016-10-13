@@ -35,13 +35,16 @@ f.sim.per.splines=function(B=100,
                            par3sin=0.25,
                            par4sin=1,
                            par5sin=0,
+                           # number of "cycles" to take
                            tmax = 1,
+                           # parameters for trend
                            add_trend = FALSE,
                            par1trend = 1,
                            par2trend = 0.1,
                            par3trend = 0,
                            par4trend = 1/10,
                            par5trend = 0,
+                           # min/max allowed probability
                            max_prob_value = 0.95,
                            min_prob_value = 0.05,
                            set_seed = 1234){
@@ -50,7 +53,7 @@ f.sim.per.splines=function(B=100,
   set.seed(set_seed)
   
   ############### initialization of the outputs ####
-  num.res = 3 + 3 + 2 + 4*2 + 2*3 + 3 + 3
+  num.res = 3 + 3 + 2 + 4*2 + 2*3 + 3 + 3 # number of result columns to initialize
   #4*2: AUC, 2*3: calibration, 3: LRT for training models, 3: score test for training models
   my.res = matrix(NA, nrow=B, ncol=num.res)
   
@@ -66,15 +69,12 @@ f.sim.per.splines=function(B=100,
       "score.p.value.rcs.train", "score.p.value.rcs.per.train", "score.p.value.cs.per.train",
       "AUCTrainMax", "AUCNewMax", "prop.events.train", "prop.events.test")
   
-  #matrix that will contain the coverage information evaluated for these points
-  #x.test.points=seq(0.025, 0.975, by=.025)
-  
-  #theoretical min and max of the covariate
+  # theoretical min and max of the covariate
   min.th.x=0
   max.th.x=1
   
   # points where the coverage is tested ####
-  x.test.points = seq(min.th.x+0.025, max.th.x-0.025, by=.025)
+  x.test.points = seq(min.th.x + 0.025, max.th.x - 0.025, by=.025)
   
   num.test.points = length(x.test.points)
   
@@ -91,61 +91,59 @@ f.sim.per.splines=function(B=100,
   lp.coverage.cs.per.train=lp.coverage.rcs.train=lp.coverage.rcs.per.train=matrix(NA, ncol=num.test.points*4, nrow=B)
   
   # define probability function in one place
-  probability_function <- function(x,
-                                   par1sin. = par1sin,
-                                   par2sin. = par2sin,
-                                   par3sin. = par3sin,
-                                   par4sin. = par4sin,
-                                   par5sin. = par5sin,
-                                   add_trend. = add_trend,
-                                   par1trend. = par1trend,
-                                   par2trend. = par2trend,
-                                   par3trend. = par3trend,
-                                   par4trend. = par4trend,
-                                   par5trend. = par5trend,
-                                   max_prob_value. = max_prob_value,
-                                   min_prob_value. = min_prob_value) {
-    sine_function(x,
-                  par1sin=par1sin.,
-                  par2sin=par2sin.,
-                  par3sin=par3sin.,
-                  par4sin=par4sin.,
-                  par5sin=par5sin.,
-                  add_trend = add_trend.,
-                  par1trend = par1trend.,
-                  par2trend = par2trend.,
-                  par3trend = par3trend.,
-                  par4trend = par4trend.,
-                  par5trend = par5trend.,
-                  max_prob_value = max_prob_value.,
-                  min_prob_value = min_prob_value.
+  probability_function <- 
+    function(x,
+             par1sin. = par1sin,
+             par2sin. = par2sin,
+             par3sin. = par3sin,
+             par4sin. = par4sin,
+             par5sin. = par5sin,
+             add_trend. = add_trend,
+             par1trend. = par1trend,
+             par2trend. = par2trend,
+             par3trend. = par3trend,
+             par4trend. = par4trend,
+             par5trend. = par5trend,
+             max_prob_value. = max_prob_value,
+             min_prob_value. = min_prob_value) {
+      sine_function(x,
+                    par1sin=par1sin.,
+                    par2sin=par2sin.,
+                    par3sin=par3sin.,
+                    par4sin=par4sin.,
+                    par5sin=par5sin.,
+                    add_trend = add_trend.,
+                    par1trend = par1trend.,
+                    par2trend = par2trend.,
+                    par3trend = par3trend.,
+                    par4trend = par4trend.,
+                    par5trend = par5trend.,
+                    max_prob_value = max_prob_value.,
+                    min_prob_value = min_prob_value.
                   )
     }
   
   ############### beginning of the iterations
   for(b in 1:B) {
     
-    # TODO 1: test if we get the same results with runif(n, min = 0, max = 2) - aka two cycles
+    # generate x on the interval allown using uniform distribution
     x = runif(n, min = 0, max = tmax) # we generate 100 x values
     
     # simulation of the probabilities
-    x.transf.2 = x.transf = probability_function(x) #sine_function(x, par1sin, par2sin, par3sin, par4sin, par5sin) #(par1sin + sin(x * 2 * pi)) * par2sin + par3sin
+    x.transf.2 = x.transf = probability_function(x) 
     
-    # TODO 3: but from now on, we have to transform the X to squish it inside [0,1]? modulus division, e.g. (x %% 1)
+    # but from now on, we have to transform the X to keep it inside [0,1] using modulus division, e.g. (x %% 1)
     x <- x %% 1
     
-    #simulation of the binary events
-    # TODO 2: we don't have to change this runif, since it generates the y axis?
+    # simulation of the binary events
     y = ifelse(runif(n) < x.transf.2, 1, 0) # event happens if generated random number [0,1] smaller than simulated probability
     # TODO: why not use rbinom() ?
-    
-    
-    
-    #transformation on the linear predictor scale
+  
+    # transformation on the linear predictor scale
     x.transf.2.lp = log(x.transf.2 / (1 - x.transf.2))
     
-    #generation of the design matrices ####
-    #classic RCS
+    # generation of the design matrices ####
+    # classic RCS
     x.rcs = rcspline.eval(x, nk = nk, inclx = TRUE)
     
     #periodic RCS
@@ -154,7 +152,10 @@ f.sim.per.splines=function(B=100,
     #saving the knots used for the splines, uses the default from rms package
     my.knots = attr(x.rcs, "knots")
     
-    #periodic cubic splines
+    # TODO!: check that my.knot are correct for each of the functions! and that each returns the same knot locations
+    # TODO!: set the default quantiles.cs to NULL?
+    
+    # periodic cubic splines
     if(is.null(quantiles.cs)){ 
       x.cs.per = cs.per(x, nk=nk, xmin=min.th.x, xmax=max.th.x)
       my.knots.cs = my.knots
