@@ -168,40 +168,35 @@ f.sim.per.splines=function(B=100,
     my.knots.rcs = attr(x.rcs, "knots")
     my.knots.rcs.per = attr(x.rcs.per, "knots")
     my.knots.cs.per = attr(x.cs.per, "knots")
+    # TODO: maybe later explicitly use each of these in the test set?
     
-    #changed in this simulation! knot location for cs, uniformly distributed
-    
+    # TODO!: save these models to results? to plot later
+    # estimate models
     mod.rcs.per = glm(y~x.rcs.per, family="binomial") # model binary responses with different versions of splines
     mod.rcs = glm(y~x.rcs, family="binomial")
     mod.cs.per = glm(y~x.cs.per, family="binomial")
     
-    #brier.rcs.per.train=mean((ynew-1/(1+exp(-mod.rcs.per$fitted.values)))^2)
-    #brier.rcs.train=mean((ynew-exp(-mod.rcs$fitted.values))^2)
-    #brier.cs.per.train=mean((ynew-exp(-mod.cs.per$fitted.values))^2)
-    
+    # Brier's scores
     brier.rcs.per.train = mean((y - mod.rcs.per$fitted.values)^2) # Brier's score on fitted values (square of diff between real and fitted)
     brier.rcs.train = mean((y-mod.rcs$fitted.values)^2)
     brier.cs.per.train = mean((y-mod.cs.per$fitted.values)^2)
     
+    # calculate proportion of events happening
     prop.events.train = mean(y)
     
-    ################### predicted probabilities, training
+    ################### predicted probabilities, training ####
     
-    #estimated linear predictor with se
+    # estimated linear predictor with se
     pred.rcs.per.train = predict(mod.rcs.per, se.fit = TRUE) # on the scale of linear predictors
     pred.rcs.train = predict(mod.rcs, se.fit=TRUE)
     pred.cs.per.train = predict(mod.cs.per, se.fit=TRUE)
     
-    #lp.rcs.per=cbind(1, x.rcs.per)%*%mod.rcs.per$coefficients
-    #lp.rcs=cbind(1, x.rcs)%*%mod.rcs$coefficients
-    #lp.cs.per=cbind(1, x.cs.per)%*%mod.cs.per$coefficients
-    
-    #saving the linear predictors
+    # saving the linear predictors
     lp.rcs.per.train = pred.rcs.per.train$fit
     lp.rcs.train = pred.rcs.train$fit
     lp.cs.per.train = pred.cs.per.train$fit
     
-    #deriving the estimated probabilities
+    # deriving the estimated probabilities
     p.rcs.per.train = 1/(1+exp(-lp.rcs.per.train))
     p.rcs.train = 1/(1+exp(-lp.rcs.train))
     p.cs.per.train = 1/(1+exp(-lp.cs.per.train))
@@ -248,7 +243,6 @@ f.sim.per.splines=function(B=100,
                                     pred.rcs.per.train$fit[my.index]+1.96*pred.rcs.per.train$se.fit[my.index])
     
     
-    
     lp.coverage.rcs.train[b,]=c(pred.rcs.train$fit[my.index]-1.96*pred.rcs.train$se.fit[my.index]<=x.transf.2.lp[my.index] & pred.rcs.train$fit[my.index]+1.96*pred.rcs.train$se.fit[my.index]>=x.transf.2.lp[my.index],
                                 
                                 pred.rcs.train$fit[my.index]-1.96*pred.rcs.train$se.fit[my.index], 
@@ -262,9 +256,9 @@ f.sim.per.splines=function(B=100,
                                    pred.cs.per.train$fit[my.index],
                                    pred.cs.per.train$fit[my.index]+1.96*pred.cs.per.train$se.fit[my.index])
     
-    #end predicted lp coverage, training
+    # end predicted lp coverage, training
     
-    #AUC max on test data
+    # AUC max on test data
     AUCTrainMax = as.numeric(performance(prediction(x.transf.2, y), "auc")@y.values)
     
     #AUC estimated on test data
@@ -292,51 +286,22 @@ f.sim.per.splines=function(B=100,
     #4debug
     x.old=x
     
-    ############## new data #######################
-    # TODO 5: redo the code from training to enable trends
+    ############## new data (test set) #######################
     
-    #n.new=1000
     x=runif(n.new, min = 0, max = tmax)
-    #x=x.old
-    ######temporary trick to include the extreme values in the sample
-    #x[which.min(x)]=0
-    #x[which.max(x)]=1
-    ########################
-    #x.transf=sin(x*2*pi)
-    #true probability
-    #x.transf.2=(x.transf+1)/2
-    #ynew=ifelse(runif(n.new)<x.transf.2, 1, 0)
-    #true linear predictor
-    #x.transf.2.lp=lpnew.true=log(x.transf.2/(1-x.transf.2))
     
-    #x.transf.2=x.transf=(1+sin(x*2*pi))*.25+.25
-    x.transf.2=x.transf = probability_function(x) #sine_function(x, par1sin, par2sin, par3sin, par4sin, par5sin)
+    x.transf.2=x.transf = probability_function(x) 
     x <- x %% 1 # merge into one cycle
     
     ynew=ifelse(runif(n)<x.transf, 1, 0)
     x.transf.2.lp=log(x.transf.2/(1-x.transf.2))
     
-    #beta=rep(1, nk-3)
-    #beta0=0
-    
-    #redetermining the knots
-    #x.rcs.per=rcs.per(x, nk=nk) 
-    #x.rcs=rcspline.eval(x, nk=nk, inclx=TRUE)
-    #x.cs.per=cs.per(x, nk=nk)
-    
     #using the knots specified in the training data
     x.rcs.per = rcs.per(x, knots=my.knots, xmin=min.th.x, xmax=max.th.x) 
     x.rcs = rcspline.eval(x, knots=my.knots, inclx=TRUE)
-    #x.cs.per=cs.per(x, knots=my.knots.cs,  nk=NULL)
-    #forDebug
-    x.cs.per = cs.per(x, knots=my.knots.cs,  nk=NULL, xmax=max.th.x, xmin=min.th.x)
+    x.cs.per = cs.per(x, knots=my.knots.cs, nk=NULL, xmax=max.th.x, xmin=min.th.x)
     
-    #lp=x.rcs.per%*%beta+beta0
-    #my.p=1/(1+exp(-lp))
-    #ynew=ifelse(runif(n)<my.p, 1, 0)
-    
-    #my.knots=attr(x.rcs, "knots")
-    
+    # construct data frames to hold data to use in test models   
     new.data.rcs.per = data.frame(ynew=ynew, x.rcs.per)
     dimnames(new.data.rcs.per)[[2]][-1]=seq(1:dim(x.rcs.per)[2])
     
@@ -350,10 +315,6 @@ f.sim.per.splines=function(B=100,
     pred.rcs.per = predict(mod.rcs.per, newdata=new.data.rcs.per, se.fit = TRUE)
     pred.rcs = predict(mod.rcs, newdata=new.data.rcs, se.fit=TRUE)
     pred.cs.per = predict(mod.cs.per, newdata=new.data.cs.per, se.fit=TRUE)
-    
-    #lp.rcs.per=cbind(1, x.rcs.per)%*%mod.rcs.per$coefficients
-    #lp.rcs=cbind(1, x.rcs)%*%mod.rcs$coefficients
-    #lp.cs.per=cbind(1, x.cs.per)%*%mod.cs.per$coefficients
     
     #saving the linear predictors
     lp.rcs.per = pred.rcs.per$fit
@@ -370,7 +331,6 @@ f.sim.per.splines=function(B=100,
     p.pred.rcs = predict(mod.rcs, newdata=new.data.rcs, se.fit=TRUE, type="response")
     p.pred.cs.per = predict(mod.cs.per, newdata=new.data.cs.per, se.fit=TRUE, type="response")
       
-    
     ############ brier's score on new data ###############
     brier.rcs.per = mean((ynew-p.rcs.per)^2)
     brier.rcs = mean((ynew-p.rcs)^2)
@@ -378,7 +338,6 @@ f.sim.per.splines=function(B=100,
     
     #proportion of events on new data
     prop.events.test=mean(ynew)
-    
     
     ############ Prediction CI coverage score on new data ###############
     
@@ -392,7 +351,6 @@ f.sim.per.splines=function(B=100,
                                 p.pred.rcs.per$fit[my.index]-1.96*p.pred.rcs.per$se.fit[my.index], 
                                 p.pred.rcs.per$fit[my.index],
                                 p.pred.rcs.per$fit[my.index]+1.96*p.pred.rcs.per$se.fit[my.index])
-    
     
     
     prob.coverage.rcs[b,]=c(p.pred.rcs$fit[my.index]-1.96*p.pred.rcs$se.fit[my.index]<=x.transf.2[my.index] & p.pred.rcs$fit[my.index]+1.96*p.pred.rcs$se.fit[my.index]>=x.transf.2[my.index],
@@ -414,15 +372,12 @@ f.sim.per.splines=function(B=100,
     
     #### coverage of linear predictor, new data
     
-    
-    
     ##### predicted lp coverage, training 
    lp.coverage.rcs.per[b,]=c(pred.rcs.per$fit[my.index]-1.96*pred.rcs.per$se.fit[my.index]<=x.transf.2.lp[my.index] & pred.rcs.per$fit[my.index]+1.96*pred.rcs.per$se.fit[my.index]>=x.transf.2.lp[my.index],
                               
                               pred.rcs.per$fit[my.index]-1.96*pred.rcs.per$se.fit[my.index], 
                               pred.rcs.per$fit[my.index],
                               pred.rcs.per$fit[my.index]+1.96*pred.rcs.per$se.fit[my.index])
-    
     
     
     lp.coverage.rcs[b,]=c(pred.rcs$fit[my.index]-1.96*pred.rcs$se.fit[my.index]<=x.transf.2.lp[my.index] & pred.rcs$fit[my.index]+1.96*pred.rcs$se.fit[my.index]>=x.transf.2.lp[my.index],
@@ -440,12 +395,10 @@ f.sim.per.splines=function(B=100,
     
     ############## end of coverage of linear predictor, new data
     
-    
+   # TODO: are these three lines duplicated from above (not needed)? 
     brier.rcs.per=mean((ynew-p.rcs.per)^2)
     brier.rcs=mean((ynew-p.rcs)^2)
     brier.cs.per=mean((ynew-p.cs.per)^2)
-    
-    
     
     #AUC max on test data
     AUCNewMax = as.numeric(performance(prediction(x.transf.2, ynew), "auc")@y.values)
@@ -484,7 +437,8 @@ f.sim.per.splines=function(B=100,
   # -dodaj možnost izvajanja z non-sin funkcijo?
   # -dodaj možnost izvajanja 
   
-  return(list(my.res=my.res,  
+  return(list(my.res=my.res, # results
+              # coverages 
               prob.coverage.rcs=prob.coverage.rcs,
               prob.coverage.rcs.per=prob.coverage.rcs.per,
               prob.coverage.cs.per=prob.coverage.cs.per,
@@ -497,14 +451,13 @@ f.sim.per.splines=function(B=100,
               lp.coverage.rcs.train=lp.coverage.rcs.train,
               lp.coverage.rcs.per.train=lp.coverage.rcs.per.train,
               lp.coverage.cs.per.train=lp.coverage.cs.per.train,
-              
+              # points at which coverage was tested
               x.test.points=x.test.points, num.test.points=num.test.points, 
               #saving the parameters of the simulation
               B=B, n=n, n.new=n.new, nk=nk, knots=my.knots, knots.cs=my.knots.cs, 
               quantiles.cs=quantiles.cs,
               #parameters for the generation of the periodic data
-              par1sin=par1sin, par2sin=par2sin, par3sin=par3sin, par4sin=par4sin, par5sin=par5sin, prop.events.train=prop.events.train, prop.events.test=prop.events.test
-              ,
+              par1sin=par1sin, par2sin=par2sin, par3sin=par3sin, par4sin=par4sin, par5sin=par5sin, prop.events.train=prop.events.train, prop.events.test=prop.events.test,
               x=x, x.transf.2.lp=x.transf.2.lp,
               tmax = tmax,
               # trend parameters
