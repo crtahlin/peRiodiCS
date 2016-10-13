@@ -479,10 +479,18 @@ f.sim.per.splines=function(B=100,
   # -dodaj možnost izvajanja 
   
   return(list(my.res=my.res,  
-              prob.coverage.rcs=prob.coverage.rcs, prob.coverage.rcs.per=prob.coverage.rcs.per, prob.coverage.cs.per=prob.coverage.cs.per,
-              lp.coverage.rcs=lp.coverage.rcs, lp.coverage.rcs.per=lp.coverage.rcs.per, lp.coverage.cs.per=lp.coverage.cs.per,
-              prob.coverage.rcs.train=prob.coverage.rcs.train, prob.coverage.rcs.per.train=prob.coverage.rcs.per.train, prob.coverage.cs.per.train=prob.coverage.cs.per.train,
-              lp.coverage.rcs.train=lp.coverage.rcs.train, lp.coverage.rcs.per.train=lp.coverage.rcs.per.train, lp.coverage.cs.per.train=lp.coverage.cs.per.train,
+              prob.coverage.rcs=prob.coverage.rcs,
+              prob.coverage.rcs.per=prob.coverage.rcs.per,
+              prob.coverage.cs.per=prob.coverage.cs.per,
+              lp.coverage.rcs=lp.coverage.rcs,
+              lp.coverage.rcs.per=lp.coverage.rcs.per,
+              lp.coverage.cs.per=lp.coverage.cs.per,
+              prob.coverage.rcs.train=prob.coverage.rcs.train,
+              prob.coverage.rcs.per.train=prob.coverage.rcs.per.train,
+              prob.coverage.cs.per.train=prob.coverage.cs.per.train,
+              lp.coverage.rcs.train=lp.coverage.rcs.train,
+              lp.coverage.rcs.per.train=lp.coverage.rcs.per.train,
+              lp.coverage.cs.per.train=lp.coverage.cs.per.train,
               
               x.test.points=x.test.points, num.test.points=num.test.points, 
               #saving the parameters of the simulation
