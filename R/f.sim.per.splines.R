@@ -90,6 +90,11 @@ f.sim.per.splines=function(B=100,
   
   lp.coverage.cs.per.train=lp.coverage.rcs.train=lp.coverage.rcs.per.train=matrix(NA, ncol=num.test.points*4, nrow=B)
   
+  # structures to hold models
+  models_rcs <- list()
+  models_rcs.per <- list()
+  models_cs.per <- list()
+  
   # define probability function in one place
   probability_function <- 
     function(x,
@@ -175,6 +180,11 @@ f.sim.per.splines=function(B=100,
     mod.rcs.per = glm(y~x.rcs.per, family="binomial") # model binary responses with different versions of splines
     mod.rcs = glm(y~x.rcs, family="binomial")
     mod.cs.per = glm(y~x.cs.per, family="binomial")
+    
+    # save models to results placeholder
+    models_rcs[[b]] <- mod.rcs
+    models_rcs.per[[b]] <- mod.rcs.per
+    models_cs.per[[b]] <- mod.cs.per
     
     # Brier's scores
     brier.rcs.per.train = mean((y - mod.rcs.per$fitted.values)^2) # Brier's score on fitted values (square of diff between real and fitted)
@@ -474,7 +484,11 @@ f.sim.per.splines=function(B=100,
               # knots info explicitly
               my.knots.rcs = my.knots.rcs,
               my.knots.rcs.per = my.knots.rcs.per,
-              my.knots.cs.per = my.knots.cs.per
+              my.knots.cs.per = my.knots.cs.per,
+              # estimated models for each simulation
+              models_rcs = models_rcs,
+              models_rcs.per = models_rcs.per,
+              models_cs.per = models_cs.per
   ))
   
   
