@@ -28,7 +28,7 @@ f.sim.per.splines=function(B=100,
                            n.new=100,  
                            nk=5,
                            knots=NULL, 
-                           quantiles.cs=c(0.05, 0.25, 0.50, 0.75, 0.95),
+                           quantiles.cs = NULL, # c(0.05, 0.25, 0.50, 0.75, 0.95),
                            #parameters for the generation of the periodic data
                            par1sin=1,
                            par2sin=0.25,
@@ -145,15 +145,15 @@ f.sim.per.splines=function(B=100,
     # generation of the design matrices ####
     # classic RCS
     x.rcs = rcspline.eval(x, nk = nk, inclx = TRUE)
+    #saving the knots used for the splines, uses the default from rms package
+    my.knots = attr(x.rcs, "knots")
     
     #periodic RCS
     x.rcs.per = rcs.per(x, nk = nk, xmin = min.th.x, xmax = max.th.x)
     
-    #saving the knots used for the splines, uses the default from rms package
-    my.knots = attr(x.rcs, "knots")
-    
     # TODO!: check that my.knot are correct for each of the functions! and that each returns the same knot locations
-    # TODO!: set the default quantiles.cs to NULL? otherwise they will have knots at different locations
+    # TODO!: set the default quantiles.cs to NULL? otherwise they will have knots at different locations than other variants
+    # DONE : set to NULL for the simulation function
     
     # periodic cubic splines
     if(is.null(quantiles.cs)){ 
@@ -470,7 +470,11 @@ f.sim.per.splines=function(B=100,
               max_prob_value = max_prob_value,
               min_prob_value = min_prob_value,
               # seed
-              set_seed = set_seed
+              set_seed = set_seed,
+              # knots info explicitly
+              my.knots.rcs = my.knots.rcs,
+              my.knots.rcs.per = my.knots.rcs.per,
+              my.knots.cs.per = my.knots.cs.per
   ))
   
   
