@@ -484,11 +484,12 @@ f.sim.per.splines=function(B=100,
               # knots info explicitly
               my.knots.rcs = my.knots.rcs,
               my.knots.rcs.per = my.knots.rcs.per,
-              my.knots.cs.per = my.knots.cs.per,
-              # estimated models for each simulation
-              models_rcs = models_rcs,
-              models_rcs.per = models_rcs.per,
-              models_cs.per = models_cs.per
+              my.knots.cs.per = my.knots.cs.per #,
+              # estimated models for each simulation 
+              # NOTE: remove temporarily, due to large size of results
+              # models_rcs = models_rcs,
+              # models_rcs.per = models_rcs.per,
+              # models_cs.per = models_cs.per
   ))
   
   
