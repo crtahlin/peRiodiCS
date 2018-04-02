@@ -2,3 +2,4 @@
 .Rhistory
 .RData
 .RDataTmp
+result*.Rdata
