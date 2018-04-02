@@ -1,0 +1,261 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+
+\author{Lara Lusa, Crt Ahlin}
+\date{October 2016}
+
+\title{Proposals for a cyclic cubic spline}
+\usepackage{amsmath}
+
+\begin{document}
+
+\maketitle
+
+\section{Definition of cubic splines}
+\begin{gather}
+s(x)=\gamma_0+\gamma_1 X + \gamma_2 X^2 + \gamma_3 X^3 + \beta_1 (X-t_1)^3_{+}+ \beta_2 (X-t_2)^3_{+}+ ... +\beta_k (X-t_k)^3_{+}+ \\
+s(x)=\gamma_0+\gamma_1 X + \gamma_2 X^2 + \gamma_3 X^3 + \sum_{j=1}^k\beta_j (X-t_j)^3_{+}
+\end{gather}
+
+%Linearity for $x\le t_1$ implies that $\gamma_2=\gamma_3=0$
+
+%Linearity for $x \ge t_k$ implies that the spline can be defined using k-2 coefficients, re-parametrizing the function
+
+For \(x \le t_1\) 
+
+\begin{gather*} 
+s(x)=\gamma_0+\gamma_1 X + \gamma_2 X^2 + \gamma_3 X^3 \\
+s^{\prime}(x)=\gamma_1 + 2\gamma_2 X + 3\gamma_3 X^2  \\
+s^{\prime\prime}(x)= 2\gamma_2  + 6\gamma_3 X  
+\end{gather*}
+
+For $x \ge t_k$ 
+\begin{gather*}
+s(x)=\gamma_0+\gamma_1 X + \gamma_2 X^2 + \gamma_3 X^3 + \sum_{j=1}^k\beta_j (X-t_j)^3 \\
+s^{\prime}(x)=\gamma_1 + 2\gamma_2 X + 3\gamma_3 X^2 + 3\sum_{j=1}^k\beta_j (X-t_j)^2 \\
+s^{\prime\prime}(x)= 2\gamma_2  + 6\gamma_3 X + 6\sum_{j=1}^k\beta_j (X-t_j) \\
+\end{gather*}
+
+
+\section{Constraining Cubic splines to achieve the same estimated value at the beginning and end of the cycle}
+
+Imposing the constraints
+
+\[ s(x_{min})=s(x_{max}) \]
+
+\begin{gather*}
+\gamma_0+\gamma_1 X_{min} + \gamma_2 X_{min}^2 + \gamma_3 X_{min}^3 = 
+\gamma_0+\gamma_1 X_{max} + \gamma_2 X_{max}^2 + \gamma_3 X_{max}^3 + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3 \\
+\gamma_1 (X_{min}-X_{max}) = 
+\gamma_2 (X_{max}^2-X_{min}^2) + \gamma_3 (X_{max}^3-X_{min}^3) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3 \\
+\gamma_1  = - \gamma_2 \frac{(X_{max}^2-X_{min}^2)}{(X_{max}-X_{min})} - \gamma_3 \frac{(X_{max}^3-X_{min}^3)}{(X_{max}-X_{min})} - \frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)^3}{(X_{max}-X_{min})} \\
+\gamma_1  = - \gamma_2 (X_{max}+X_{min})- \gamma_3 (X_{max}^2+X_{max}X_{min}+X_{min}^2) - \frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)^3}{(X_{max}-X_{min})} \\
+\gamma_1  = -\frac{1}{X_{max}-X_{min}} \left(\gamma_2 (X^2_{max}-X^2_{min})+ \gamma_3 (X_{max}^3-X^3_{min}) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3\right)
+\end{gather*}
+    
+Additionally constraining 
+
+\[s^{\prime}(x_{min})=s^{\prime}(x_{max})\]
+
+\begin{gather*}
+\gamma_1 + 2\gamma_2 X_{min} + 3\gamma_3 X_{min}^2 = 
+\gamma_1 + 2\gamma_2 X_{max} + 3\gamma_3 X_{max}^2 + 3\sum_{j=1}^k\beta_j (X_{max}-t_j)^2 \\
+\gamma_2 (X_{min}-X_{max}) = 
+  3/2\gamma_3 (X_{max}^2-X_{min}^2) + 3/2\sum_{j=1}^k\beta_j (X_{max}-t_j)^2 \\
+\gamma_2  = 
+  - 3/2 \gamma_3 \frac{(X_{max}^2-X_{min}^2)}{(X_{max}-X_{min})} - 3/2\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)^2}{(X_{max}-X_{min})} \\
+\gamma_2=-\frac{3}{2 (X_{max}-X_{min})} \left( \gamma_3 (X^2_{max}-X^2_{min}) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^2 )    \right) \\
+\gamma_2  = 
+  - 3/2 \gamma_3 (X_{max}+X_{min}) - 3/2\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)^2}{(X_{max}-X_{min})} 
+\end{gather*}
+
+Finaly, we have to constrain
+
+\[ s^{\prime\prime}(x_{min})=s^{\prime\prime}(x_{max}) \]
+
+\begin{gather*}
+2\gamma_2  + 6\gamma_3 X_{min}=
+2\gamma_2  + 6\gamma_3 X_{max} + 6\sum_{j=1}^k\beta_j (X_{max}-t_j) \\
+\gamma_3 (X_{min}-X_{max})=\sum_{j=1}^k\beta_j (X_{max}-t_j)
+\end{gather*}
+
+Deriving \( \gamma_3 \)
+
+\[
+\gamma_3 =\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{min}-X_{max}}=-\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}}
+\]
+
+
+\clearpage
+Summarizing the results
+
+\begin{gather}
+\gamma_3 =-\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} \\
+\gamma_2=-\frac{3}{2 (X_{max}-X_{min})} \left( \gamma_3 (X^2_{max}-X^2_{min}) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^2     \right) \\
+\gamma_1  = -\frac{1}{X_{max}-X_{min}} \left(\gamma_2 (X^2_{max}-X^2_{min})+ \gamma_3 (X_{max}^3-X^3_{min}) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3\right)
+\end{gather}
+
+We already have \( \gamma_3 \) expressed as a fnuction of \( \beta_j \). 
+
+Deriving \( \gamma_2 \) as a function of \( \beta_j \)
+
+\begin{gather*}
+\gamma_2=-\frac{3}{2 (X_{max}-X_{min})} \left( \gamma_3 (X^2_{max}-X^2_{min}) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^2     \right) \\
+\gamma_3 =-\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} \\
+\gamma_2=-\frac{3}{2 (X_{max}-X_{min})} \left( \left( -\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} \right)  (X^2_{max}-X^2_{min}) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^2     \right) \\
+\gamma_2= \frac{3(X^2_{max}-X^2_{min}) \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2 (X_{max}-X_{min})^2} 
+-\frac{3  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2 (X_{max}-X_{min})} \\
+\gamma_2= \frac{3(X_{max}+X_{min}) \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2 (X_{max}-X_{min})} 
+-\frac{3  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2 (X_{max}-X_{min})}    
+\end{gather*}
+
+\clearpage 
+Deriving \(\gamma_1 \) as a function of \( \beta_j \)
+
+\[
+\gamma_1  = -\frac{1}{X_{max}-X_{min}} \left(\gamma_2 (X^2_{max}-X^2_{min})+ \gamma_3 (X_{max}^3-X^3_{min}) + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3\right)
+\]
+
+\begin{equation*}
+\begin{aligned}
+ \gamma_1  = &    -\frac{1}{X_{max}-X_{min}} \Biggl( \\
+&  (X^2_{max}-X^2_{min}) \left(\frac{3(X_{max}+X_{min}) \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2 (X_{max}-X_{min})} 
+-\frac{3  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2 (X_{max}-X_{min})} \right) + \\
+%&& \gamma_3 (X_{max}^3-X^3_{min})\\
+& -\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min})\\
+& + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3\Biggr)\\
+\end{aligned}
+\end{equation*}
+
+
+\begin{multline*}
+\gamma_1  = -\frac{1}{X_{max}-X_{min}} \Biggl( \\ 
+(X^2_{max}-X^2_{min}) \left(\frac{3(X_{max}+X_{min}) \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2 (X_{max}-X_{min})} 
+-\frac{3  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2 (X_{max}-X_{min})} \right) + \\
+-\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min}) + \\ \sum_{j=1}^k\beta_j (X_{max}-t_j)^3 \Biggr)
+\end{multline*}
+
+% TODO: which variant to use - aligned or multiline?
+%
+%\begin{equation*}
+%\begin{aligned}
+% \gamma_1  = &    -\frac{1}{X_{max}-X_{min}} \Biggl( \\
+%&  (X_{max}+X_{min}) \left(\frac{3(X_{max}+X_{min}) \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2} 
+%-\frac{3  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2} \right) + \\
+%& -\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min})\\
+%& + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3\Biggr)\\
+%\end{aligned}
+%\end{equation*}
+
+
+\begin{equation*}
+\begin{aligned}
+ \gamma_1  = &    -\frac{1}{X_{max}-X_{min}} \Biggl( \\
+&   \frac{3(X_{max}+X_{min})^2 \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2} 
+-\frac{3(X_{max}+X_{min})  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2}  + \\
+& -\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min})\\
+& + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3\Biggr)\\
+\end{aligned}
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+s(x)=& \gamma_0+\gamma_1 X + \gamma_2 X^2 + \gamma_3 X^3 + \sum_{j=1}^k\beta_j (x-t_j)_{+}^3 \\
+& =\gamma_0+ \\
+&  -\frac{X}{X_{max}-X_{min}} \Biggl(  \\
+&   \frac{3(X_{max}+X_{min})^2 \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2} +\\
+& - \frac{3(X_{max}+X_{min})  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2} + \\
+& -\frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min}) \\
+& + \sum_{j=1}^k\beta_j (X_{max}-t_j)^3 \Biggr)\\
+& +  \left( \frac{3(X_{max}+X_{min}) \sum_{j=1}^k\beta_j (X_{max}-t_j) }{2 (X_{max}-X_{min})} 
+ -\frac{3  \sum_{j=1}^k\beta_j (X_{max}-t_j)^2  }{2 (X_{max}-X_{min})}\right) X^2\\
+&  - \left( \frac{\sum_{j=1}^k\beta_j (X_{max}-t_j)}{X_{max}-X_{min}} \right) X^3\\
+& + \sum_{j=1}^k\beta_j (x-t_j)_{+}^3\\
+\end{aligned}
+\end{equation*}
+
+\[ s(x)=\gamma_0+\sum_{j=1}^k\beta_j s_j(x) \]
+ 
+\[ s_j(x)=a_jx+b_j x^2+c_j x^3+ (x-t_j)_{+}^3 \]
+
+with 
+
+% TODO: which of the three variants of style below to use?
+\begin{equation*}
+\begin{aligned}
+a_j=
+&  -\frac{1}{X_{max}-X_{min}} \Biggl(  \\
+&   \frac{3(X_{max}+X_{min})^2  (X_{max}-t_j) }{2} +\\
+& - \frac{3(X_{max}+X_{min})   (X_{max}-t_j)^2  }{2} + \\
+& -\frac{(X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min}) \\
+& + (X_{max}-t_j)^3 \Biggr)=\\
+&  -\frac{1}{X_{max}-X_{min}} \Biggl(  \\
+&   \frac{X^2_{max}+X^2_{min}+4X_{max}X_{min}  }{2} (X_{max}-t_j)+\\
+& - \frac{3(X_{max}+X_{min})}{2}(X_{max}-t_j)^2 + \\
+& + (X_{max}-t_j)^3 \Biggr)
+\end{aligned}
+\end{equation*}
+
+% variatn multiline
+%\begin{multline}
+%a_j = 
+%  -\frac{1}{X_{max}-X_{min}} \Biggl(  
+%   \frac{3(X_{max}+X_{min})^2  (X_{max}-t_j) }{2} +
+% - \frac{3(X_{max}+X_{min})   (X_{max}-t_j)^2  }{2} + \\
+% -\frac{(X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min}) 
+% + (X_{max}-t_j)^3 \Biggr)=\\
+%  -\frac{1}{X_{max}-X_{min}} \Biggl(  \\
+%   \frac{X^2_{max}+X^2_{min}+4X_{max}X_{min}  }{2} (X_{max}-t_j)+\\
+% - \frac{3(X_{max}+X_{min})}{2}(X_{max}-t_j)^2 + \\
+% + (X_{max}-t_j)^3 \Biggr)
+%\end{multline}
+
+% variant split
+%\begin{equation*}
+%\begin{split}
+%a_j & = -\frac{1}{X_{max}-X_{min}} \Biggl( \\
+%& \frac{3(X_{max}+X_{min})^2  (X_{max}-t_j) }{2} + \\
+%& -\frac{3(X_{max}+X_{min})   (X_{max}-t_j)^2  }{2} + \\
+%& -\frac{(X_{max}-t_j)}{X_{max}-X_{min}} (X_{max}^3-X^3_{min})+ \\
+%& + (X_{max}-t_j)^3 \Biggr) \\
+%& =  -\frac{1}{X_{max}-X_{min}} \Biggl(  \\
+%& \frac{X^2_{max}+X^2_{min}+4X_{max}X_{min}  }{2} (X_{max}-t_j)+ \\
+%& -\frac{3(X_{max}+X_{min})}{2}(X_{max}-t_j)^2 + \\
+%& +(X_{max}-t_j)^3 \Biggr)
+%\end{split}
+%\end{equation*}
+
+%\begin{equation} \label{eq1}
+%\begin{split}
+%a_j & = \\ &-\frac{1}{X_{max}-X_{min}} \Biggl( \\
+%    & 3 +3 +3 \Biggr)
+%\end{split}
+%\end{equation}
+
+\[ b_j= \frac{3(X_{max}+X_{min}) (X_{max}-t_j) }{2 (X_{max}-X_{min})} 
+ -\frac{3   (X_{max}-t_j)^2  }{2 (X_{max}-X_{min})} \]
+
+\[ c_j= - \frac{(X_{max}-t_j)}{X_{max}-X_{min}} \]
+
+
+Assuming that the period of x is defined on \( [0, T] \) (i.e., \( X_{min}=0, X_{max}=T \) ) 
+\(a_j \), \(b_j\) and \(c_j\) simplify to 
+
+\begin{align*}
+a_j & = -\frac{1}{T} \bigl(  \frac{3T^2  (T-t_j) }{2} - \frac{3T (T-t_j)^2  }{2} -\frac{T^3(T-t_j)}{T}  + (T-t_j)^3 \bigr) = \\
+ & = - \frac{3T(T-t_j) }{2} + \frac{3(T-t_j)^2  }{2} +\frac{T(T-t_j)}{1}  - \frac{(T-t_j)^3}{T} 
+- \frac{T(T-t_j) }{2} + \frac{3(T-t_j)^2  }{2}  
+ - \frac{(T-t_j)^3}{T} \\ 
+b_j & = \frac{3(T-t_j) }{2} 
+ -\frac{3   (T-t_j)^2  }{2T} \\
+c_j & = -  \frac{T-t_j}{T}, \\
+\end{align*}
+
+which are the same values reported by Zhang et al., 2000 (but note that $c_j$ was reported omitting the minus sign in the original paper, which should be regarded as a typo, as the equations produce a periodic cubic spline using the formulas reported above.)
+
+\end{document}
+
+
+
