@@ -13,4 +13,3 @@ cyclicFractionalPolynomial(data)
 Returns the  coefficients for a cyclic function constructed using cyclic 
 fractional polynomial.
 }
-

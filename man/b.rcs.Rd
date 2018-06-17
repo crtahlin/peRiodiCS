@@ -2,7 +2,7 @@
 % Please edit documentation in R/b.rcs.R
 \name{b.rcs}
 \alias{b.rcs}
-\title{TODO: REVIEW Basis for restricted cubic splines}
+\title{Basis for restricted cubic splines}
 \usage{
 b.rcs(x, knots, inclx = FALSE)
 }
@@ -13,9 +13,8 @@ b.rcs(x, knots, inclx = FALSE)
 
 \item{inclx}{logical, if TRUE returns also the x vector}
 }
-\details{
-function that derives the restricted cubic splines 
-for a value/vector of values, given the knots, 
-obtains exactly the same results as the rcs function included in the rms package
+\description{
+Function that derives the restricted cubic splines 
+for a value/vector of values, given the knots; 
+obtains exactly the same results as the rcs function included in the rms package.
 }
-

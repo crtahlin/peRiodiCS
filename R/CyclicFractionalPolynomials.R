@@ -1,4 +1,5 @@
 #' @title Function to calculate coefficients for a cyclic fractional polynomial.
+#' 
 #' @description
 #' Returns the  coefficients for a cyclic function constructed using cyclic 
 #' fractional polynomial.

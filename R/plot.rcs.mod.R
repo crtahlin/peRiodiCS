@@ -1,3 +1,7 @@
+#' @title Just some ploting function
+#' 
+#' @description Plots graph in a certain, nice looking way ;)
+#' 
 #' @export
 Plot.rcs.mod<-function(My.mod,
                        my.var,

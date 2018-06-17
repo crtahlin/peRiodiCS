@@ -1,5 +1,7 @@
 #' @title Function for generating the curve estimated by cyclic fractional polynomial.
 #' 
+#' @description Plots a curve estimated by cyclic fractional polynomial.
+#' 
 #' @param data Data to estimate on.
 #' @param curve If TRUE, a curve is plotted instead of points.
 #' @param add If TRUE, the plot is added to an existing plot.

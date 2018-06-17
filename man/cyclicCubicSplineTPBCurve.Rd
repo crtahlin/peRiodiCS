@@ -20,4 +20,3 @@ a set of points (FALSE).}
 function for generating the curve predicted by Cyclic Cubic Spline using 
 Truncated Power Series
 }
-

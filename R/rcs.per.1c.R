@@ -1,5 +1,8 @@
-#periodic restricted cubic spline, with only the constrain on equality of estimated values at beginning/end of period
-
+#' @title RCS.PER, one restriction
+#' @description 
+#' Experimental: 
+#' periodic restricted cubic spline, with only the constraint on equality of estimated values at beginning/end of period
+#' 
 #' @export
 rcs.per.1c=function(x, knots, xmin, xmax){
   #x: numerical variable

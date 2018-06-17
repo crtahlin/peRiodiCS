@@ -18,4 +18,6 @@ rcs.per(x, knots = NULL, nk = 5, xmin = min(x, na.rm = TRUE),
 
 \item{xmax:}{value of the (theoretical) maximum of x}
 }
-
+\description{
+Generate design matrix for periodic restricted cubic spline.
+}

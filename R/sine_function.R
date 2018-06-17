@@ -1,5 +1,7 @@
 #' @title Sine function used in the simulations (for simulating probability)
 #' 
+#' @description Helper function for simulations.
+#' 
 #' @export
 sine_function <- function(x,
                           par1sin = 1,   par2sin=0.25,    par3sin=0.25,  par4sin=1,        par5sin=0,

@@ -5,8 +5,8 @@
 #' @param x numeric vector
 #' @param knots vector with knot locations
 #' @param nk number of knots, overridden if knots are provided
-#' @param mxax value of the end of the cycle
-#' @param mxax value of the beginning of the cycle
+#' @param xmax value of the end of the cycle
+#' @param mmin value of the beginning of the cycle
 #' 
 #' @export
 cs.per=function(x, knots=NULL, nk=5, xmax=max(x, na.rm=TRUE), xmin=min(x, na.rm=TRUE)){

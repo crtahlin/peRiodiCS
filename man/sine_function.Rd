@@ -9,4 +9,6 @@ sine_function(x, par1sin = 1, par2sin = 0.25, par3sin = 0.25,
   par3trend = 0, par4trend = 1/10, par5trend = 0, add_trend = TRUE,
   max_prob_value = 0.95, min_prob_value = 0.05)
 }
-
+\description{
+Helper function for simulations.
+}

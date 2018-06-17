@@ -14,11 +14,10 @@ cs.per(x, knots = NULL, nk = 5, xmax = max(x, na.rm = TRUE),
 
 \item{nk}{number of knots, overridden if knots are provided}
 
-\item{mxax}{value of the end of the cycle}
+\item{xmax}{value of the end of the cycle}
 
-\item{mxax}{value of the beginning of the cycle}
+\item{mmin}{value of the beginning of the cycle}
 }
 \description{
 implementation of the formulas of zhang for any support of x
 }
-

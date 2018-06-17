@@ -1,5 +1,8 @@
 #' @title Generate design matrix for periodic restricted cubic spline
 #' 
+#' @description 
+#' Generate design matrix for periodic restricted cubic spline.
+#' 
 #' @param x numerical x values to transform to new basis
 #' @param knots vector with locations of the knots of the spline
 #' @param nk number of knots, used only if the knots are not specified, overridden otherwise

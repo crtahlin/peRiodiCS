@@ -13,4 +13,6 @@ cyclicFractionalPolynomialCurve(data, curve = TRUE, add = FALSE)
 
 \item{add}{If TRUE, the plot is added to an existing plot.}
 }
-
+\description{
+Plots a curve estimated by cyclic fractional polynomial.
+}

@@ -3,3 +3,5 @@
 Working.R
 code/
 ^data-raw$
+result*
+tests/

@@ -6,7 +6,7 @@
 \title{Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007–2014}
 \format{A data frame with variables:
 \describe{
-\item{Unique}{record identification number}
+\item{UniqueID}{record identification number}
 \item{Enrolled}{Did the patient consent and enroll in the study?:	1=Yes, 0=No}
 \item{Country}{Country of enrollment:	Egypt, Jordan, Oman, Qatar, Yemen}
 \item{EpiYear}{Year of enrollment:	Integers (2007-2014)}

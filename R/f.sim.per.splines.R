@@ -1,5 +1,7 @@
 #' @title Simulation function
 #' 
+#' @description Runs simulations generating many models for CS, CS.PER, RCS.PER and returns results to be able to compare them.
+#' 
 #' @param B number of simulations
 #' @param n number of points in training sample?
 #' @param n.new number of points in test sample?

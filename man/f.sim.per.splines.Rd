@@ -5,11 +5,11 @@
 \title{Simulation function}
 \usage{
 f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
-  quantiles.cs = c(0.05, 0.25, 0.5, 0.75, 0.95), par1sin = 1,
-  par2sin = 0.25, par3sin = 0.25, par4sin = 1, par5sin = 0, tmax = 1,
-  add_trend = FALSE, par1trend = 1, par2trend = 0.1, par3trend = 0,
-  par4trend = 1/10, par5trend = 0, max_prob_value = 0.95,
-  min_prob_value = 0.05, set_seed = 1234)
+  quantiles.cs = NULL, par1sin = 1, par2sin = 0.25, par3sin = 0.25,
+  par4sin = 1, par5sin = 0, tmax = 1, add_trend = FALSE,
+  par1trend = 1, par2trend = 0.1, par3trend = 0, par4trend = 1/10,
+  par5trend = 0, max_prob_value = 0.95, min_prob_value = 0.05,
+  set_seed = 1234)
 }
 \arguments{
 \item{B}{number of simulations}
@@ -54,4 +54,6 @@ f.sim.per.splines(B = 100, n = 100, n.new = 100, nk = 5, knots = NULL,
 
 \item{quatiles.cs}{quantiles at which to place the knots by default?}
 }
-
+\description{
+Runs simulations generating many models for CS, CS.PER, RCS.PER and returns results to be able to compare them.
+}

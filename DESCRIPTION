@@ -1,6 +1,6 @@
 Package: peRiodic
 Type: Package
-Title: Functions for generating periodic curves.
+Title: Functions for generating periodic curves
 Version: 0.3.2
 Date: 2018-06-16
 Author: Crt Ahlin, Lara Lusa
@@ -10,6 +10,7 @@ Description: Functions for generating some variants of cyclic curves
     periodic cubic splines).
 License: GPL-3
 Depends:
+    R (>= 2.10),
     ggplot2,
     rms
 Suggests:

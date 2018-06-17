@@ -1,9 +1,9 @@
-#' @title TODO: REVIEW Basis for restricted cubic splines
+#' @title Basis for restricted cubic splines
 #' 
-#' @details 
-#' function that derives the restricted cubic splines 
-#' for a value/vector of values, given the knots, 
-#' obtains exactly the same results as the rcs function included in the rms package
+#' @description 
+#' Function that derives the restricted cubic splines 
+#' for a value/vector of values, given the knots; 
+#' obtains exactly the same results as the rcs function included in the rms package.
 #' 
 #' @param x numerical vector
 #' @param knots vector specifying the knots

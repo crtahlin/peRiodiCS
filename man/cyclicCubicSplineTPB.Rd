@@ -18,4 +18,3 @@ Otherwise returns the solution matrix.}
 Returns the coefficients for a cyclic function constructed using cubic splines
 with truncated power basis.
 }
-

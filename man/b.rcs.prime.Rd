@@ -15,4 +15,3 @@ b.rcs.prime(x, knots)
 function that derives the first derivative of the restricted cubic splines 
 for a value/vector of values, given the knots
 }
-
