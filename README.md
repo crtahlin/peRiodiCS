@@ -16,7 +16,7 @@ Example models for different variants:
 # assuming y is the binary response vector and x is numerical vector with
 # values to transform to new basis
 
-# RCS - restricted cubis splines
+# RCS - restricted cubic splines
 mod.rcs <- glm(y ~ rcs(x), family = "binomial", data = your_data)
 
 # periodic RCS
