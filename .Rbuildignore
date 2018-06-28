@@ -5,3 +5,12 @@ code/
 ^data-raw$
 result*
 tests/
+R/rcs.per.1c.R
+R/CyclicCubicSplines.R
+R/CyclicCubicSplinesPlot.R
+R/CyclicFractionalPolynomials.R
+R/CyclicFractionalPolynomialsPlot.R
+R/f.sim.per.splines.R
+R/look_at_simulation.R
+R/sine_function.R
+design.matrix*
