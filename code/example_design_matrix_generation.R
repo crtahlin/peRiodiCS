@@ -29,7 +29,7 @@ write.csv2(design.matrix.rcs, file = "design.matrix.rcs.csv") # write to CSV fil
 Knots <- rcspline.eval(x = viral_nonNAData$EpiWeek, nk = 5, knots.only = TRUE)
 mod.rcs <- glm(RSV ~ rcs(EpiWeek, knots = Knots, inclx = TRUE), family = "binomial", data = viral_nonNAData, x = TRUE)
 Plot.per.mod(mod.rcs, XvarName = "EpiWeek", Smooth = FALSE, xLocation = 2)
-Plot.per.mod(mod.rcs, XvarName = "EpiWeek", Smooth = TRUE)
+Plot.per.mod(mod.rcs, XvarName = "EpiWeek", Smooth = TRUE) # doesn't work
 
 
 #############################
