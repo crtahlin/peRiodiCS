@@ -24,6 +24,7 @@
 #' @param Smooth Make the Xaxis values equidistant (and the curve smoother)
 #' @param Xmin The min X of data to be predicted (if Smooth)
 #' @param Xmax The max X of data to be predicted (if Smooth)
+#' @param xLocation If smooth FALSE, the location of the x term in model$x[, xLocation]
 #' 
 #' @export
 Plot.per.mod <- function(Model,
@@ -46,7 +47,8 @@ Plot.per.mod <- function(Model,
                          Add=FALSE,
                          Col="black",
                          PlotCI=TRUE,
-                         Smooth=FALSE) {
+                         Smooth=FALSE,
+                         xLocation=2) {
   
   # NOTE: depends on how the model was built - if NOT by data=some_data, but by direct reference to
   # some_data$variable ~ someothervariable
@@ -56,7 +58,9 @@ Plot.per.mod <- function(Model,
   stopifnot(!is.null(Model$data))
   
   # load the X variable from the data in the model
-  Xvar <- Model$data[[XvarName]]
+  Xvar <- na.omit(Model$data[[XvarName]])
+  Xvar <- Xvar[order(Xvar)]
+  Xvar <- unique(Xvar)
   
   # determine where to plot vertical lines
   Intervals <- c(0.0001, 0.001, .01, .1, 1, 10, 100, 1000, 10000, 100000)
@@ -70,19 +74,22 @@ Plot.per.mod <- function(Model,
   Prediction <- predict(Model, type="response", se=TRUE) # determine possible y
   my.range.y <- diff(range(Prediction, na.rm=T))
   if(is.null(Hlines)){ # if horizontal lines are not defined
-    By.h<-Intervals[which(my.range/Intervals < 10)[1]]
+    By.h<-Intervals[which(my.range.y/Intervals < 10)[1]]
     Hlines <- seq(-100000, 10000, by=By.h)
   }
-  
-  # make new X values to make predisctions smoother
+  # make new X values to make predictions smoother
   if (Smooth == TRUE) { # if using prediction on equidistant x value interval
-    if (is.null(Xmin)) {Xmin <- min(Xvar)}
-    if (is.null(Xmax)) {Xmax <- max(Xvar)}
-    Xvar <- seq(Xmin, Xmax, length.out = 1000) # make a sequence of 1000 Xses to plot smoothly
-    NewData <- data.frame(Xvar)
-    colnames(NewData) <- XvarName
-    Prediction <- predict(Model, type = "response", se = TRUE, newdata = NewData) 
-  }
+    if (is.null(Xmin)) {Xmin <- min(Model$data[[XvarName]], na.rm = TRUE)}
+    if (is.null(Xmax)) {Xmax <- max(Model$data[[XvarName]], na.rm = TRUE)}
+    Xvar <- seq(Xmin, Xmax, length.out = dim(Model$data)[1] ) # make a sequence of 1000 Xses to plot smoothly
+    NewData <- data.frame((Xvar))
+    colnames(NewData) <- c(XvarName)
+    Prediction <- predict.glm(Model, type = "response", se = TRUE, newdata = NewData) 
+  } else {
+    # to work with rcs, this has to be done without using new data ...
+    Xvar <- Model$x[, xLocation]
+    Prediction <- predict(Model, type = "response", se = TRUE) 
+    }
   
   # plot main curve
   if(Add==FALSE) {
