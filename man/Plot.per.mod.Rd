@@ -13,6 +13,8 @@ Plot.per.mod(Model, XvarName, Ylab = "Response", Xlab = "Covariate",
 \arguments{
 \item{Model}{The built model}
 
+\item{XvarName}{Name of the x variable in the dataset (column name)}
+
 \item{Ylab}{Label on vertical (y) axis}
 
 \item{Xlab}{Label on horizontal (x) axis}
@@ -49,9 +51,7 @@ Plot.per.mod(Model, XvarName, Ylab = "Response", Xlab = "Covariate",
 
 \item{Smooth}{Make the Xaxis values equidistant (and the curve smoother)}
 
-\item{xLocation}{If smooth FALSE, the location of the x term in model$[, xLocation]}
-
-\item{Xvarname}{Name of the x variable in the dataset (column name)}
+\item{xLocation}{If smooth FALSE, the location of the x term in model$x[, xLocation]}
 }
 \description{
 Plots graph of periodic curves with confidence intervals.

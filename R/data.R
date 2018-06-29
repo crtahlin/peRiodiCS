@@ -1,4 +1,4 @@
-#' @title Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007–2014
+#' @title Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007-2014
 #' 
 #' @description 
 #' Data about infections with different viruses across several years. 
@@ -34,6 +34,6 @@
 #' @source \url{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0180954}
 #' 
 #' @references 
-#' Horton, Katherine C. AND Dueger, Erica L. AND Kandeel, Amr AND Abdallat, Mohamed AND El-Kholy, Amani AND Al-Awaidy, Salah AND Kohlani, Abdul Hakim AND Amer, Hanaa AND El-Khal, Abel Latif AND Said, Mayar AND House, Brent AND Pimentel, Guillermo AND Talaat, Maha (2017). Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007–2014. PLOS ONE, 12, 1-17.
+#' Horton, Katherine C. AND Dueger, Erica L. AND Kandeel, Amr AND Abdallat, Mohamed AND El-Kholy, Amani AND Al-Awaidy, Salah AND Kohlani, Abdul Hakim AND Amer, Hanaa AND El-Khal, Abel Latif AND Said, Mayar AND House, Brent AND Pimentel, Guillermo AND Talaat, Maha (2017). Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007-2014. PLOS ONE, 12, 1-17.
 #' 
 "viral_east_mediteranean"

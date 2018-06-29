@@ -10,8 +10,10 @@ Description: Functions for generating some variants of cyclic curves
     periodic cubic splines).
 License: GPL-3
 Depends:
-    R (>= 2.10),
-    ggplot2,
+    R (>= 2.10)
+Imports:
+    graphics,
+    Hmisc,
     rms
 Suggests:
     testthat

@@ -5,7 +5,7 @@
 #' Data should be included in the model.
 #' 
 #' @param Model The built model 
-#' @param Xvarname Name of the x variable in the dataset (column name)
+#' @param XvarName Name of the x variable in the dataset (column name)
 #' @param Ylab Label on vertical (y) axis
 #' @param Xlab Label on horizontal (x) axis
 #' @param Xlim Limits of x axis
@@ -26,10 +26,13 @@
 #' @param Xmax The max X of data to be predicted (if Smooth)
 #' @param xLocation If smooth FALSE, the location of the x term in model$x[, xLocation]
 #' 
+#' @import graphics stats
+#' @importFrom graphics abline
+#' @importFrom stats predict predict.glm na.omit
+#' 
 #' @export
 Plot.per.mod <- function(Model,
                          XvarName,
-                         # my.var=NULL,
                          Ylab="Response",
                          Xlab="Covariate",
                          Ylim=NULL,
@@ -71,8 +74,8 @@ Plot.per.mod <- function(Model,
   }
   
   # determine where to plot horizontal lines
-  Prediction <- predict(Model, type="response", se=TRUE) # determine possible y
-  my.range.y <- diff(range(Prediction, na.rm=T))
+  Prediction <- predict(Model, type="response", se.fit = TRUE) # determine possible y
+  my.range.y <- diff(range(Prediction, na.rm = TRUE))
   if(is.null(Hlines)){ # if horizontal lines are not defined
     By.h<-Intervals[which(my.range.y/Intervals < 10)[1]]
     Hlines <- seq(-100000, 10000, by=By.h)
@@ -84,11 +87,11 @@ Plot.per.mod <- function(Model,
     Xvar <- seq(Xmin, Xmax, length.out = dim(Model$data)[1] ) # make a sequence of 1000 Xses to plot smoothly
     NewData <- data.frame((Xvar))
     colnames(NewData) <- c(XvarName)
-    Prediction <- predict.glm(Model, type = "response", se = TRUE, newdata = NewData) 
+    Prediction <- predict.glm(Model, type = "response", se.fit = TRUE, newdata = NewData) 
   } else {
     # to work with rcs, this has to be done without using new data ...
     Xvar <- Model$x[, xLocation]
-    Prediction <- predict(Model, type = "response", se = TRUE) 
+    Prediction <- predict(Model, type = "response", se.fit = TRUE) 
     }
   
   # plot main curve

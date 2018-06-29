@@ -3,7 +3,7 @@
 \docType{data}
 \name{viral_east_mediteranean}
 \alias{viral_east_mediteranean}
-\title{Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007–2014}
+\title{Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007-2014}
 \format{A data frame with variables:
 \describe{
 \item{UniqueID}{record identification number}
@@ -41,6 +41,6 @@ Data about infections with different viruses across several years.
 For more information see Source and References section.
 }
 \references{
-Horton, Katherine C. AND Dueger, Erica L. AND Kandeel, Amr AND Abdallat, Mohamed AND El-Kholy, Amani AND Al-Awaidy, Salah AND Kohlani, Abdul Hakim AND Amer, Hanaa AND El-Khal, Abel Latif AND Said, Mayar AND House, Brent AND Pimentel, Guillermo AND Talaat, Maha (2017). Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007–2014. PLOS ONE, 12, 1-17.
+Horton, Katherine C. AND Dueger, Erica L. AND Kandeel, Amr AND Abdallat, Mohamed AND El-Kholy, Amani AND Al-Awaidy, Salah AND Kohlani, Abdul Hakim AND Amer, Hanaa AND El-Khal, Abel Latif AND Said, Mayar AND House, Brent AND Pimentel, Guillermo AND Talaat, Maha (2017). Viral etiology, seasonality and severity of hospitalized patients with severe acute respiratory infections in the Eastern Mediterranean Region, 2007-2014. PLOS ONE, 12, 1-17.
 }
 \keyword{datasets}

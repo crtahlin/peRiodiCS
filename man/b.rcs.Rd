@@ -9,7 +9,7 @@ b.rcs(x, knots, inclx = FALSE)
 \arguments{
 \item{x}{numerical vector}
 
-\item{knots}{vector specifying the knots}
+\item{knots}{vector specifying the knot locations}
 
 \item{inclx}{logical, if TRUE returns also the x vector}
 }

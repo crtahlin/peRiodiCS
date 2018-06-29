@@ -2,7 +2,7 @@
 % Please edit documentation in R/b.rcs.prime.R
 \name{b.rcs.prime}
 \alias{b.rcs.prime}
-\title{TODO REVIEW Derive first derivatives of RCS}
+\title{Derive first derivatives of RCS}
 \usage{
 b.rcs.prime(x, knots)
 }

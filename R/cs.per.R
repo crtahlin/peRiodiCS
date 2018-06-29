@@ -9,6 +9,9 @@
 #' @param xmax value of the (theoretical) minimum of x
 #' @param xmin value of the (theoretical) maximum of x
 #' 
+#' @import Hmisc
+#' @importFrom Hmisc rcspline.eval
+#' 
 #' @export
 cs.per <- function(x,
                    knots = NULL,

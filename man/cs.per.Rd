@@ -2,22 +2,22 @@
 % Please edit documentation in R/cs.per.R
 \name{cs.per}
 \alias{cs.per}
-\title{Periodic cubic splines design matrix}
+\title{Generate design matrix for periodic cubic splines}
 \usage{
 cs.per(x, knots = NULL, nk = 5, xmax = max(x, na.rm = TRUE),
   xmin = min(x, na.rm = TRUE))
 }
 \arguments{
-\item{x}{numeric vector}
+\item{x}{numerical x values to transform to new basis}
 
-\item{knots}{vector with knot locations}
+\item{knots}{vector with locations of the knots of the spline}
 
-\item{nk}{number of knots, overridden if knots are provided}
+\item{nk}{number of knots, used only if the knots are not specified, overridden otherwise}
 
-\item{xmax}{value of the end of the cycle}
+\item{xmax}{value of the (theoretical) minimum of x}
 
-\item{mmin}{value of the beginning of the cycle}
+\item{xmin}{value of the (theoretical) maximum of x}
 }
 \description{
-implementation of the formulas of zhang for any support of x
+Generate design matrix for periodic cubic splines.
 }
