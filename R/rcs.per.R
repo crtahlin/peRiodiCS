@@ -18,39 +18,37 @@ rcs.per <- function(x,
   
   # derive the knot locations as in the rms package, if they are not provided
   if(is.null(knots)) {
-    knots = rcspline.eval(x, nk = nk, knots.only = TRUE)
+    knots <- rcspline.eval(x, nk = nk, knots.only = TRUE)
   }
   
   # check if the number of knots if at least 4
-  nk=length(knots)
-  if(nk<4) stop("To use the periodic RCS you must specify at least 4 knots")
+  nk <- length(knots)
+  if (nk < 4) stop("To use the periodic RCS you must specify at least 4 knots")
   
-  b.x.all=b.rcs(x, knots) #matrix with the expansion of the splines, n*(k-2)
-  b.xmax.all=b.rcs(xmax, knots) #value of the spline for x=xmax, vector 1*(k-2)
+  b.x.all <- b.rcs(x, knots) # matrix with the expansion of the splines, n*(k-2)
+  b.xmax.all <- b.rcs(xmax, knots) # value of the spline for x=xmax, vector 1*(k-2)
   
-  b.prime.x.all=b.rcs.prime(x, knots) #matrix with the first derivative of the expansion of the splines, n*(k-2)
-  b.prime.xmax.all=b.rcs.prime(xmax, knots) #vector with the value of the first derivative for x=xmax, vector 1*(k-2)
+  b.prime.x.all <- b.rcs.prime(x, knots) # matrix with the first derivative of the expansion of the splines, n*(k-2)
+  b.prime.xmax.all <- b.rcs.prime(xmax, knots) # vector with the value of the first derivative for x=xmax, vector 1*(k-2)
   
-  #terms to add in gamma1
-  gamma1.c1=(xmin-xmax)/b.xmax.all[nk-2] #constant
-  gamma.f1=gamma1.c1*b.x.all[,nk-2] #vector n*1
+  # terms to add in gamma1
+  gamma1.c1 <- (xmin-xmax) / b.xmax.all[nk-2] # constant
+  gamma.f1 <- gamma1.c1 * b.x.all[, nk-2] # vector n*1
   
-  gamma.f2=gamma1.c1*b.prime.xmax.all[nk-2]
+  gamma.f2 <- gamma1.c1 * b.prime.xmax.all[nk-2]
   
-  denom.beta.kMinus3=b.prime.xmax.all[nk-3]-b.xmax.all[nk-3]/b.xmax.all[nk-2]*b.prime.xmax.all[nk-2]
+  denom.beta.kMinus3 <- b.prime.xmax.all[nk-3] - b.xmax.all[nk-3] / b.xmax.all[nk-2] * b.prime.xmax.all[nk-2]
   
-  #betaj.f1=b.x.all[,c(1:(nk-3))]-b.xmax.all[,c(1:(nk-3))]/b.xmax.all[nk-2]*b.x.all[,nk-2]
+  beta.j <- matrix(NA, ncol=nk-3, nrow = length(x))
   
-  beta.j=matrix(NA, ncol=nk-3, nrow=length(x))
-  
-  for(j in 1:(nk-3)) {beta.j[,j]= b.x.all[,j]- b.xmax.all[j]/b.xmax.all[nk-2]*b.x.all[,nk-2]}
+  for(j in 1:(nk-3)) {beta.j[,j] <- b.x.all[,j] - b.xmax.all[j] / b.xmax.all[nk-2] * b.x.all[,nk-2]}
   
   if(nk > 4) {
-    beta.c2.j=matrix(NA, ncol=nk-4, nrow=length(x))
-    for(j in 1:(nk-4)) {beta.c2.j[,j]=b.prime.xmax.all[,j]-b.xmax.all[j]/b.xmax.all[nk-2]*b.prime.xmax.all[nk-2]}
+    beta.c2.j <- matrix(NA, ncol = nk-4, nrow = length(x))
+    for(j in 1:(nk-4)) {beta.c2.j[,j] <- b.prime.xmax.all[,j] - b.xmax.all[j] / b.xmax.all[nk-2] * b.prime.xmax.all[nk-2]}
   }
   
-  num.beta.kMinus3=beta.j[,nk-3]
+  num.beta.kMinus3 <- beta.j[, nk-3]
   
   # construct dataframe with the result
   if (nk > 4) {
@@ -62,7 +60,7 @@ rcs.per <- function(x,
       result <- x+gamma.f1-gamma.f2/denom.beta.kMinus3*num.beta.kMinus3
     }
   
-  #saves the knots
+  # saves the knot locations as attributes
   attr(result, "knots") <- knots
   
   # return result

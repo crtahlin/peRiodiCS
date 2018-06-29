@@ -49,4 +49,4 @@ cs.per <- function(x,
   # return result
   return(rcs.out)
   
-}#end b.rcs.cubic.2c
+}# end cs.per
