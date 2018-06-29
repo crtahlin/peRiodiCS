@@ -1,19 +1,21 @@
-#' @title Periodic cubic splines design matrix
+#' @title Generate design matrix for periodic cubic splines
 #' 
-#' @description implementation of the formulas of zhang for any support of x
+#' @description 
+#' Generate design matrix for periodic cubic splines.
 #' 
-#' @param x numeric vector
-#' @param knots vector with knot locations
-#' @param nk number of knots, overridden if knots are provided
-#' @param xmax value of the end of the cycle
-#' @param mmin value of the beginning of the cycle
+#' @param x numerical x values to transform to new basis
+#' @param knots vector with locations of the knots of the spline
+#' @param nk number of knots, used only if the knots are not specified, overridden otherwise
+#' @param xmax value of the (theoretical) minimum of x
+#' @param xmin value of the (theoretical) maximum of x
 #' 
 #' @export
-cs.per=function(x, knots = NULL,
-                nk = 5,
-                xmax = max(x, na.rm=TRUE),
-                xmin = min(x, na.rm=TRUE)){
-# browser()
+cs.per <- function(x,
+                   knots = NULL,
+                   nk = 5,          
+                   xmax = max(x, na.rm=TRUE),
+                   xmin = min(x, na.rm=TRUE)){
+  
   # if they are not provided, derive the knots using function from the rms package
   if( is.null(knots) ) {
     knots <- rcspline.eval(x, nk = nk, knots.only = TRUE)

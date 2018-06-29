@@ -6,16 +6,16 @@
 #' @param x numerical x values to transform to new basis
 #' @param knots vector with locations of the knots of the spline
 #' @param nk number of knots, used only if the knots are not specified, overridden otherwise
-#' @param xmin: value of the (theoretical) minimum of x
-#' @param xmax: value of the (theoretical) maximum of x
+#' @param xmin value of the (theoretical) minimum of x
+#' @param xmax value of the (theoretical) maximum of x
 #' 
 #' @export
-rcs.per=function(x,
-                 knots=NULL,
-                 nk=5,
-                 xmin=min(x, na.rm=TRUE),
-                 xmax=max(x, na.rm=TRUE)){
- 
+rcs.per <- function(x,
+                    knots = NULL,
+                    nk = 5,
+                    xmin = min(x, na.rm=TRUE),
+                    xmax = max(x, na.rm=TRUE)){
+  
   # derive the knot locations as in the rms package, if they are not provided
   if(is.null(knots)) {
     knots = rcspline.eval(x, nk = nk, knots.only = TRUE)
