@@ -1,13 +1,14 @@
 Package: peRiodiCS
 Type: Package
 Title: Functions for generating periodic curves
-Version: 0.4.0
-Date: 2018-06-23
+Version: 0.5.0
+Date: 2018-06-29
 Author: Crt Ahlin, Lara Lusa
 Maintainer: Crt Ahlin <crt.ahlin@gmail.com>
-Description: Functions for generating some variants of cyclic curves
-    (restricted cubic spline, periodic restricted cubic splines,
-    periodic cubic splines).
+Description: 
+    Functions for generating variants of curves:
+    restricted cubic spline, periodic restricted cubic splines,
+    periodic cubic splines.
 License: GPL-3
 Depends:
     R (>= 2.10)
