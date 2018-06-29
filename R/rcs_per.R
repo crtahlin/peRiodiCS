@@ -10,7 +10,7 @@
 #' @param xmax value of the (theoretical) maximum of x
 #' 
 #' @export
-rcs.per <- function(x,
+rcs_per <- function(x,
                     knots = NULL,
                     nk = 5,
                     xmin = min(x, na.rm=TRUE),
@@ -25,11 +25,11 @@ rcs.per <- function(x,
   nk <- length(knots)
   if (nk < 4) stop("To use the periodic RCS you must specify at least 4 knots")
   
-  b.x.all <- b.rcs(x, knots) # matrix with the expansion of the splines, n*(k-2)
-  b.xmax.all <- b.rcs(xmax, knots) # value of the spline for x=xmax, vector 1*(k-2)
+  b.x.all <- b_rcs(x, knots) # matrix with the expansion of the splines, n*(k-2)
+  b.xmax.all <- b_rcs(xmax, knots) # value of the spline for x=xmax, vector 1*(k-2)
   
-  b.prime.x.all <- b.rcs.prime(x, knots) # matrix with the first derivative of the expansion of the splines, n*(k-2)
-  b.prime.xmax.all <- b.rcs.prime(xmax, knots) # vector with the value of the first derivative for x=xmax, vector 1*(k-2)
+  b.prime.x.all <- b_rcs_prime(x, knots) # matrix with the first derivative of the expansion of the splines, n*(k-2)
+  b.prime.xmax.all <- b_rcs_prime(xmax, knots) # vector with the value of the first derivative for x=xmax, vector 1*(k-2)
   
   # terms to add in gamma1
   gamma1.c1 <- (xmin-xmax) / b.xmax.all[nk-2] # constant
@@ -66,4 +66,4 @@ rcs.per <- function(x,
   # return result
   return(result)
   
-} # end rcs.per
+} # end rcs_per

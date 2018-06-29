@@ -13,7 +13,7 @@
 #' @importFrom Hmisc rcspline.eval
 #' 
 #' @export
-cs.per <- function(x,
+cs_per <- function(x,
                    knots = NULL,
                    nk = 5,          
                    xmax = max(x, na.rm=TRUE),

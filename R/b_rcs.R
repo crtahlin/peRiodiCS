@@ -10,7 +10,7 @@
 #' @param inclx logical, if TRUE returns also the x vector
 #' 
 #' @export
-b.rcs <- function(x, knots, inclx=FALSE) {
+b_rcs <- function(x, knots, inclx=FALSE) {
   num.knots = length(knots)
   tk = knots[num.knots]
   tkmin1 = knots[num.knots-1]

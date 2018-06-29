@@ -1,5 +1,7 @@
 #' @title Simulation function
 #' 
+#' # TODO: change references to rcs.per to rcs_per and same for cs.per, etc
+#' 
 #' @description Runs simulations generating many models for CS, CS.PER, RCS.PER and returns results to be able to compare them.
 #' 
 #' @param B number of simulations

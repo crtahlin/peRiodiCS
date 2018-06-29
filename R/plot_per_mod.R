@@ -31,7 +31,7 @@
 #' @importFrom stats predict predict.glm na.omit
 #' 
 #' @export
-Plot.per.mod <- function(Model,
+Plot_per_mod <- function(Model,
                          XvarName,
                          Ylab="Response",
                          Xlab="Covariate",
