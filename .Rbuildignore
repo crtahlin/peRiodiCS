@@ -15,3 +15,5 @@ R/sine_function.R
 design.matrix*
 ^\.travis\.yml$
 cran-comments.md
+inst/derivation_CS.PER/
+inst/derivation_RCS.PER/
