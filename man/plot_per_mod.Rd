@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_per_mod.R
 \name{plot_per_mod}
 \alias{plot_per_mod}
-\title{Ploting function for periodic curves model}
+\title{Plotting function for periodic curves model}
 \usage{
 plot_per_mod(Model, XvarName, Ylab = "Response", Xlab = "Covariate",
   Ylim = NULL, Xlim = NULL, Xmin = NULL, Xmax = NULL, Knots = NULL,

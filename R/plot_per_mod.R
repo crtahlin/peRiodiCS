@@ -1,4 +1,4 @@
-#' @title Ploting function for periodic curves model
+#' @title Plotting function for periodic curves model
 #' 
 #' @description 
 #' Plots graph of periodic curves with confidence intervals.
