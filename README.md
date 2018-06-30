@@ -7,7 +7,7 @@ Install with :
 
 ```
 library(devtools)
-install_github("crtahlin/peRiodic")
+install_github("crtahlin/peRiodiCS")
 ```
 
 Example models for different variants:
@@ -20,11 +20,11 @@ Example models for different variants:
 mod.rcs <- glm(y ~ rcs(x), family = "binomial", data = your_data)
 
 # periodic RCS
-mod.rcs.per <- glm(y ~ rcs.per(x, xmin = 0, xmax = 1, nk = 5),
+mod.rcs.per <- glm(y ~ rcs_per(x, xmin = 0, xmax = 1, nk = 5),
                                   family = "binomial", data = your_data)
                                   
 # periodic CS (cubic spline)
-mod.cs.per <- glm(y ~ cs.per(x, xmin = 0, xmax = 1, nk = 5),
+mod.cs.per <- glm(y ~ cs_per(x, xmin = 0, xmax = 1, nk = 5),
                                   family = "binomial", data = your_data)
 
 ```
