@@ -14,3 +14,4 @@ R/f.sim.per.splines.R
 R/look_at_simulation.R
 R/sine_function.R
 design.matrix*
+^\.travis\.yml$
