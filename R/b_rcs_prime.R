@@ -7,7 +7,6 @@
 #' @param x vector of values
 #' @param knots vector of knot locations
 #' 
-#' @export
 b_rcs_prime <- function (x, knots) {
   num.knots <- length(knots)
   tk <- knots[num.knots]

@@ -9,7 +9,6 @@
 #' @param knots vector specifying the knot locations
 #' @param inclx logical, if TRUE returns also the x vector
 #' 
-#' @export
 b_rcs <- function(x, knots, inclx=FALSE) {
   num.knots = length(knots)
   tk = knots[num.knots]
