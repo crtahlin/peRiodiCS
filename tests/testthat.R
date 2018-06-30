@@ -1,4 +1,4 @@
 library(testthat)
-library(cyclicCurvesAlfa)
+library(peRiodiCS)
 
-test_check("cyclicCurvesAlfa")
+test_check("peRiodiCS")
