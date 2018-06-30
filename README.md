@@ -1,4 +1,7 @@
-peRiodic
+[![Travis-CI Build Status](https://travis-ci.org/crtahlin/peRiodiCS.svg?branch=master)](https://travis-ci.org/crtahlin/peRiodiCS)
+
+
+peRiodiCS
 ===========
 
 Code for the periodic functions, under development.
