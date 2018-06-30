@@ -3,8 +3,7 @@
 Working.R
 code/
 ^data-raw$
-result*
-tests/
+result.*Rdata
 R/rcs.per.1c.R
 R/CyclicCubicSplines.R
 R/CyclicCubicSplinesPlot.R
@@ -15,3 +14,4 @@ R/look_at_simulation.R
 R/sine_function.R
 design.matrix*
 ^\.travis\.yml$
+cran-comments.md
