@@ -4,9 +4,12 @@
 peRiodiCS
 ===========
 
-Code for the periodic functions, under development.
+Code for periodic versions of cubic splines and restricted cubic splines.
+The functions transform a numeric (time) variable `x` into a new basis, 
+to model with either a periodic variant of cubic splines or
+periodic restricted cubic spline. 
 
-Install with :
+Install from GitHub with:
 
 ```
 library(devtools)
@@ -16,10 +19,10 @@ install_github("crtahlin/peRiodiCS")
 Example models for different variants:
 
 ```
-# assuming y is the binary response vector and x is numerical vector with
+# assuming y is a binary response vector and x is numerical vector with
 # values to transform to new basis
 
-# RCS - restricted cubic splines
+# RCS - restricted cubic splines (non-periodic, just for reference)
 mod.rcs <- glm(y ~ rcs(x), family = "binomial", data = your_data)
 
 # periodic RCS
