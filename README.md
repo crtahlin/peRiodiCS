@@ -19,18 +19,32 @@ install_github("crtahlin/peRiodiCS")
 Example models for different variants:
 
 ```
-# assuming y is a binary response vector and x is numerical vector with
-# values to transform to new basis
+# load example data; see help("viral_east_mediteranean")
+data("viral_east_mediteranean")
 
-# RCS - restricted cubic splines (non-periodic, just for reference)
-mod.rcs <- glm(y ~ rcs(x), family = "binomial", data = your_data)
+# calculate location of knots to use
+Knots <- Hmisc::rcspline.eval(x = viral_east_mediteranean$EpiWeek,
+                              nk = 5, knots.only = TRUE)
+                       
+### RCS - restricted cubic splines (non-periodic, just for reference) #########
+# model viral infections vs weeks
+model_rcs <- glm(RSV ~ Hmisc::rcspline.eval(EpiWeek, inclx = TRUE, knots = Knots), data = viral_east_mediteranean)
 
-# periodic RCS
-mod.rcs.per <- glm(y ~ rcs_per(x, xmin = 0, xmax = 1, nk = 5),
-                                  family = "binomial", data = your_data)
+# plot model (with many points, to make it smooth)
+plot_per_mod(Model = model_rcs, XvarName = "EpiWeek", Smooth = TRUE)
+
+### periodic RCS ##############################################################
+# model viral infections vs weeks
+model_rcs_per <- glm(RSV ~ rcs_per(EpiWeek, knots = Knots), data = viral_east_mediteranean)
+
+# plot model (with many points, to make it smooth)
+plot_per_mod(Model = model_rcs_per, XvarName = "EpiWeek", Smooth = TRUE)
                                   
-# periodic CS (cubic spline)
-mod.cs.per <- glm(y ~ cs_per(x, xmin = 0, xmax = 1, nk = 5),
-                                  family = "binomial", data = your_data)
+### periodic CS (cubic spline) ###############################################
+# model viral infections vs weeks
+model_cs_per <- glm(RSV ~ cs_per(EpiWeek, knots = Knots), data = viral_east_mediteranean)
+
+# plot model (with many points, to make it smooth)
+plot_per_mod(Model = model_cs_per, XvarName = "EpiWeek", Smooth = TRUE)
 
 ```
