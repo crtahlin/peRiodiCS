@@ -16,3 +16,6 @@ Which is true, this is a new submission to CRAN.
 
 ## Downstream dependencies
 No downstream dependencies, as this is a first time submission.
+
+## Notes
+NOTE: this is actually a resubmission of first submission, with added examples in help files, as requested by reviewer.
