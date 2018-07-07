@@ -9,7 +9,7 @@
 #' @param xmin value of the (theoretical) minimum of x
 #' @param xmax value of the (theoretical) maximum of x
 #' 
-#' #' @examples 
+#' @examples 
 #' # load example data; see help("viral_east_mediteranean")
 #' data("viral_east_mediteranean")
 #' 

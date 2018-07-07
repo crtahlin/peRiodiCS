@@ -16,9 +16,12 @@ rcs_per(x, knots = NULL, nk = 5, xmin = min(x, na.rm = TRUE),
 
 \item{xmin}{value of the (theoretical) minimum of x}
 
-\item{xmax}{value of the (theoretical) maximum of x
-
-#' @examples 
+\item{xmax}{value of the (theoretical) maximum of x}
+}
+\description{
+Generate design matrix for periodic restricted cubic spline.
+}
+\examples{
 # load example data; see help("viral_east_mediteranean")
 data("viral_east_mediteranean")
 
@@ -31,8 +34,6 @@ Knots <-
 model <- glm(RSV ~ rcs_per(EpiWeek, knots = Knots), data = viral_east_mediteranean)
 
 # plot model (with many points, to make it smooth)
-plot_per_mod(Model = model, XvarName = "EpiWeek", Smooth = TRUE)}
-}
-\description{
-Generate design matrix for periodic restricted cubic spline.
+plot_per_mod(Model = model, XvarName = "EpiWeek", Smooth = TRUE)
+
 }
