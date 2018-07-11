@@ -21,10 +21,9 @@
 #' @param Add Add to existing plot
 #' @param Col Color of the plotted lines
 #' @param PlotCI Plot confidence intervals
-#' @param Smooth Make the Xaxis values equidistant (and the curve smoother)
-#' @param Xmin The min X of data to be predicted (if Smooth)
-#' @param Xmax The max X of data to be predicted (if Smooth)
-#' @param xLocation If smooth FALSE, the location of the x term in model$x[, xLocation]
+#' @param Xmin The min X of data to be predicted 
+#' @param Xmax The max X of data to be predicted 
+#' @param nPoints Number of points to use on the x axis
 #' 
 #' @import graphics stats
 #' @importFrom graphics abline
@@ -50,8 +49,7 @@ plot_per_mod <- function(Model,
                          Add=FALSE,
                          Col="black",
                          PlotCI=TRUE,
-                         Smooth=FALSE,
-                         xLocation=2) {
+                         nPoints=100) {
   
   # NOTE: depends on how the model was built - if NOT by data=some_data, but by direct reference to
   # some_data$variable ~ someothervariable
@@ -80,20 +78,15 @@ plot_per_mod <- function(Model,
     By.h<-Intervals[which(my.range.y/Intervals < 10)[1]]
     Hlines <- seq(-100000, 10000, by=By.h)
   }
-  # make new X values to make predictions smoother
-  if (Smooth == TRUE) { # if using prediction on equidistant x value interval
-    if (is.null(Xmin)) {Xmin <- min(Model$data[[XvarName]], na.rm = TRUE)}
-    if (is.null(Xmax)) {Xmax <- max(Model$data[[XvarName]], na.rm = TRUE)}
-    Xvar <- seq(Xmin, Xmax, length.out = dim(Model$data)[1] ) # make a sequence of 1000 Xses to plot smoothly
-    NewData <- data.frame((Xvar))
-    colnames(NewData) <- c(XvarName)
-    Prediction <- predict.glm(Model, type = "response", se.fit = TRUE, newdata = NewData) 
-  } else {
-    # to work with rcs, this has to be done without using new data ...
-    Xvar <- Model$x[, xLocation]
-    Prediction <- predict(Model, type = "response", se.fit = TRUE) 
-    }
   
+  # make new X values to make predictions smoother
+  if (is.null(Xmin)) {Xmin <- min(Model$data[[XvarName]], na.rm = TRUE)}
+  if (is.null(Xmax)) {Xmax <- max(Model$data[[XvarName]], na.rm = TRUE)}
+  Xvar <- seq(Xmin, Xmax, length.out = nPoints ) # make a sequence of Xses to plot smoothly
+  NewData <- data.frame((Xvar))
+  colnames(NewData) <- c(XvarName)
+  Prediction <- predict.glm(Model, type = "response", se.fit = TRUE, newdata = NewData) 
+
   # plot main curve
   if(Add==FALSE) {
     matplot( rbind(Xvar, Xvar, Xvar), # make a new plot

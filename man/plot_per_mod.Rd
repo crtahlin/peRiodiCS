@@ -8,7 +8,7 @@ plot_per_mod(Model, XvarName, Ylab = "Response", Xlab = "Covariate",
   Ylim = NULL, Xlim = NULL, Xmin = NULL, Xmax = NULL, Knots = NULL,
   Title = NULL, Vlines = NULL, Hlines = NULL, Cex.lab = NULL,
   Cex.main = NULL, Cex.axis = NULL, Axes = TRUE, Add = FALSE,
-  Col = "black", PlotCI = TRUE, Smooth = FALSE, xLocation = 2)
+  Col = "black", PlotCI = TRUE, nPoints = 100)
 }
 \arguments{
 \item{Model}{The built model}
@@ -23,9 +23,9 @@ plot_per_mod(Model, XvarName, Ylab = "Response", Xlab = "Covariate",
 
 \item{Xlim}{Limits of x axis}
 
-\item{Xmin}{The min X of data to be predicted (if Smooth)}
+\item{Xmin}{The min X of data to be predicted}
 
-\item{Xmax}{The max X of data to be predicted (if Smooth)}
+\item{Xmax}{The max X of data to be predicted}
 
 \item{Knots}{Locations of knots of the splines}
 
@@ -49,9 +49,7 @@ plot_per_mod(Model, XvarName, Ylab = "Response", Xlab = "Covariate",
 
 \item{PlotCI}{Plot confidence intervals}
 
-\item{Smooth}{Make the Xaxis values equidistant (and the curve smoother)}
-
-\item{xLocation}{If smooth FALSE, the location of the x term in model$x[, xLocation]}
+\item{nPoints}{Number of points to use on the x axis}
 }
 \description{
 Plots graph of periodic curves with confidence intervals.

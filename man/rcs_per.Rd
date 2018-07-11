@@ -34,6 +34,6 @@ Knots <-
 model <- glm(RSV ~ rcs_per(EpiWeek, knots = Knots), data = viral_east_mediteranean)
 
 # plot model (with many points, to make it smooth)
-plot_per_mod(Model = model, XvarName = "EpiWeek", Smooth = TRUE)
+plot_per_mod(Model = model, XvarName = "EpiWeek")
 
 }
