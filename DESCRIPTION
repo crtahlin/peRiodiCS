@@ -1,8 +1,8 @@
 Package: peRiodiCS
 Type: Package
 Title: Functions for Generating Periodic Curves
-Version: 0.5.1.9000
-Date: 2018-07-06
+Version: 0.5.1.9002
+Date: 2018-07-011
 Authors@R: c(
     person("Crt", "Ahlin", email = "crt.ahlin@gmail.com", role = c("aut", "cre")),
     person("Lara", "Lusa", role = "aut")
